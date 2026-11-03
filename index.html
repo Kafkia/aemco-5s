@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 
-<meta name="app-rev" content="Rev. 24">
+<meta name="app-rev" content="Rev. 25">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" media="print" onload="this.media=&#39;all&#39;">
 <style>
@@ -393,6 +393,47 @@ input[type=date]{-webkit-appearance:none;appearance:none;display:block}
 .inv-qr{display:flex;gap:12px;align-items:center;margin-top:6px}.inv-qr img{width:120px;height:120px;border:1px solid #e3e8f0;border-radius:8px;flex:none}
 .inv-b{display:flex;flex-wrap:wrap;gap:8px}.inv-b button,.inv-b a{flex:1 1 45%;text-align:center;border:0;border-radius:10px;padding:11px 8px;font:700 14px Arial,sans-serif;cursor:pointer;text-decoration:none}
 .inv-wa{background:#25D366;color:#fff}.inv-sh{background:#16253F;color:#fff}.inv-cp{background:#eef2f8;color:#16253F}
+
+/* ---- Documentos ---- */
+a.doc{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+a.doc:hover{border-color:var(--accent)}
+.doc-ic{font-size:30px;flex:none;width:46px;text-align:center}
+/* ---- Ação: botões rápidos ---- */
+.act .qst{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.act .qst .btn{min-height:32px}
+/* ---- Mapa da planta ---- */
+.mp-round{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.mp-round input[type=range]{flex:1;min-width:160px;accent-color:var(--accent)}
+.mp-round b{font-size:13px;color:var(--ink2)}
+.mp-wrap{overflow:hidden}
+.mp-box{position:relative;width:100%;background:var(--surface2);touch-action:none;user-select:none;-webkit-user-select:none}
+.mp-box img{width:100%;height:auto;display:block;pointer-events:none}
+.mp-pin{position:absolute;transform:translate(-50%,-100%);width:44px;height:44px;border-radius:50% 50% 50% 0;transform-origin:50% 100%;rotate:-45deg;border:3px solid #fff;background:var(--c,#9aa1ad);box-shadow:0 3px 10px rgba(0,0,0,.35);cursor:pointer;padding:0;display:grid;place-items:center;font-family:var(--mono);color:#fff;z-index:2}
+.mp-pin>*{rotate:45deg}
+.mp-pin .n{position:absolute;top:-3px;left:-3px;width:18px;height:18px;border-radius:50%;background:var(--a,#333);border:2px solid #fff;font-size:10px;line-height:14px;font-weight:700;text-align:center;rotate:45deg}
+.mp-pin .s{font-size:11px;font-weight:700;margin-top:4px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.mp-pin small{font-size:9px;font-weight:700;margin-top:-2px;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.mp-pin.on{outline:3px solid var(--accent);outline-offset:2px;z-index:3}
+.mp-pin.nopos{border-style:dashed;opacity:.85}
+.mp-pin:hover{filter:brightness(1.08)}
+.mp-pan{border-left:6px solid var(--c)}
+.mp-k{grid-template-columns:repeat(4,1fr)}
+.mp-k .kpi .v{font-size:26px}
+.mini-r svg{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+table.mp-tab{width:100%;border-collapse:collapse;font-size:13px}
+table.mp-tab th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;text-align:left;padding:6px}
+table.mp-tab td{border-top:1px solid var(--line);padding:7px 6px;cursor:pointer}
+table.mp-tab tr:hover td{background:var(--surface2)}
+/* ---- Cadastro ---- */
+.adm-g{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:8px}
+.adm-g .field{min-width:0}.adm-g .field.w{grid-column:span 3}
+@media (max-width:760px){.adm-g{grid-template-columns:1fr 1fr}.adm-g .field.w{grid-column:1/-1}}
+table.adm-tab{width:100%;border-collapse:collapse;font-size:13px}
+table.adm-tab th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;text-align:left;padding:6px}
+table.adm-tab td{border-top:1px solid var(--line);padding:7px 6px;vertical-align:middle}
+.inv-wa{display:inline-flex;align-items:center;background:#25D366;color:#fff;font-weight:700;border-radius:8px;padding:6px 12px;text-decoration:none;font-size:13px}
+.pinbox input#em-in{font-size:18px;letter-spacing:0;text-align:left}
+@media (max-width:480px){.mp-k{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head><body>
 <script>
@@ -416,6 +457,7 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
       <button class="tab" role="tab" id="tab-man" aria-selected="false" data-view="man">Manual</button>
       <button class="tab" role="tab" id="tab-cal" aria-selected="false" data-view="cal">Calendário</button>
       <button class="tab" role="tab" id="tab-hist" aria-selected="false" data-view="hist">Dados</button>
+      <button class="tab" role="tab" id="tab-doc" aria-selected="false" data-view="doc">Documentos</button>
     </nav>
     <div class="hdr2"><span id="who" class="net" hidden></span><span id="net" class="net" hidden></span><button type="button" class="inv-btn" id="inv-open">📣 Convidar</button><div id="g-slot"></div></div>
   </div>
@@ -713,6 +755,7 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
       <details><summary>Quem altera perguntas, áreas ou líderes?</summary><p>Somente o Comitê, com apoio da Lean Way; a alteração gera nova revisão desta IT e do app.</p></details>
     </div>
   </section>
+  <section id="view-doc" class="view" hidden style="flex-direction:column;gap:16px"></section>
 </main>
 <div class="toast" id="toast" hidden></div>
 
@@ -752,6 +795,7 @@ var __objRest = (source, exclude) => {
 var _a, _b;
 const CFG = { "sensos": [{ "code": "1S", "jp": "Seiri", "pt": "Utilização", "qs": ["Os itens neste local são realmente necessários para as atividades diárias?", "Todos os materiais, ferramentas e documentos do local foram utilizados nos últimos 30 dias?", "Todos os itens armazenados têm uso definido (não há itens guardados apenas “por precaução”)?", "Os materiais obsoletos ou vencidos foram removidos?", "O espaço de trabalho está livre de acúmulos desnecessários?"] }, { "code": "2S", "jp": "Seiton", "pt": "Organização", "qs": ["Cada item tem um local definido, identificado e padronizado?", "Os materiais mais usados estão posicionados nos locais de fácil acesso?", "É possível localizar rapidamente uma ferramenta ou documento sem perguntar a alguém?", "Existe uma lógica visual clara na disposição dos itens (por frequência, tipo ou tamanho)?", "Há indicadores visuais (rótulos, cores, sinalizações) que facilitam a localização?"] }, { "code": "3S", "jp": "Seiso", "pt": "Limpeza", "qs": ["O ambiente está limpo e livre de sujeiras visíveis?", "Os colaboradores participam ativamente da limpeza do próprio posto?", "O local está livre de acúmulo de sujeira que possa esconder problemas (vazamentos, desgastes, falhas)?", "Existem planos ou rotinas de limpeza diárias e semanais documentadas?", "São utilizadas inspeções durante a limpeza para identificar anomalias?"] }, { "code": "4S", "jp": "Seiketsu", "pt": "Padronização", "qs": ["Existem padrões visuais (etiquetas, cores, quadros) padronizados e mantidos?", "Os procedimentos de limpeza, ordenação e descarte estão documentados e visíveis?", "Todos os setores seguem os mesmos critérios para organização e limpeza?", "As auditorias e treinamentos de 5S são realizados periodicamente?", "Há controle sobre o uso correto de EPIs e higiene pessoal?"] }, { "code": "5S", "jp": "Shitsuke", "pt": "Autodisciplina", "qs": ["Os colaboradores seguem as rotinas do 5S espontaneamente, sem necessidade de cobrança?", "Existe um sistema de reconhecimento ou feedback sobre o cumprimento do 5S?", "Os líderes praticam e reforçam o 5S no dia a dia?", "Há um compromisso claro com a melhoria contínua e a cultura de excelência?", "Os desvios são corrigidos prontamente e usados como aprendizado?"] }], "areas": [{ "id": 1, "name": "Logística (Expedição / CD)", "color": "#E60073", "lider": "Steve", "colider": "William", "apoio": "Vanessa" }, { "id": 2, "name": "Montagem", "color": "#92D050", "lider": "Maicon", "colider": "André", "apoio": "Henrique" }, { "id": 3, "name": "Almoxarifado Usinados", "color": "#FFFF00", "lider": "Matheus", "colider": "Leonardo", "apoio": "Ana" }, { "id": 4, "name": "Usinagem", "color": "#FF0000", "lider": "Ericson", "colider": "Jeferson", "apoio": "Vinícius" }, { "id": 5, "name": "Manutenção", "color": "#000000", "lider": "Rodrigo", "colider": "Nickolas", "apoio": "Carlos Eduardo" }, { "id": 6, "name": "Facilities (Portaria, Banheiros, Refeitório, Estac.)", "color": "#00A1DA", "lider": "Luciano", "colider": "Gabriel", "apoio": "Gustavo" }, { "id": 7, "name": "Trefila", "color": "#002060", "lider": "Luis", "colider": "Marcelo", "apoio": "Ângelo" }, { "id": 8, "name": "Almoxarifado Comprado", "color": "#7030A0", "lider": "Elton", "colider": "Marcelo", "apoio": "Silvio" }, { "id": 9, "name": "Administrativo", "color": "#FF9900", "lider": "Wallace", "colider": "Braulio", "apoio": "Igor" }], "auditores": ["Andres", "Sposito", "Gilberto", "Alexandre", "Helen Ventura", "Alan", "Lidiane", "Maria Eduarda", "Edison", "Estefani", "Thais", "Kelvin", "Spina Neto", "Cristiano", "Kandi", "Homar", "João Bosco (Lean Way)"], "rounds": [{ "code": "R0", "label": "Auditoria Inicial", "obj": "1S – diagnóstico inicial" }, { "code": "R1", "label": "Out – 1ª quinzena", "obj": "1S – nova auditoria (ações 15 dias)" }, { "code": "R2", "label": "Out – 2ª quinzena", "obj": "1S – validação / avanço" }, { "code": "R3", "label": "Nov – 1ª quinzena", "obj": "2S – auditoria inicial" }, { "code": "R4", "label": "Nov – 2ª quinzena", "obj": "2S – validação / avanço" }, { "code": "R5", "label": "Dez – 1ª quinzena", "obj": "3S – auditoria inicial" }, { "code": "R6", "label": "Dez – 2ª quinzena", "obj": "3S – validação / avanço" }], "sched": [{ "r": "R0", "area": 4, "date": "2026-09-23", "aud": [] }, { "r": "R0", "area": 2, "date": "2026-10-06", "aud": ["Gilberto", "Alexandre"] }, { "r": "R0", "area": 7, "date": "2026-10-07", "aud": ["Helen Ventura", "Kelvin"] }, { "r": "R0", "area": 5, "date": "2026-10-08", "aud": ["Alan", "Spina Neto"] }, { "r": "R0", "area": 1, "date": "2026-10-09", "aud": ["Andres", "Lidiane"] }, { "r": "R0", "area": 3, "date": "2026-10-13", "aud": ["Sposito", "Maria Eduarda"] }, { "r": "R0", "area": 8, "date": "2026-10-14", "aud": ["Edison", "Estefani"] }, { "r": "R0", "area": 6, "date": "2026-10-15", "aud": ["Thais", "Gilberto"] }, { "r": "R0", "area": 9, "date": "2026-10-16", "aud": ["Andres", "Alexandre"] }, { "r": "R1", "area": 4, "date": "2026-10-20", "aud": ["Kelvin", "Alan"] }, { "r": "R1", "area": 2, "date": "2026-10-21", "aud": ["Spina Neto", "Helen Ventura"] }, { "r": "R1", "area": 7, "date": "2026-10-22", "aud": ["Lidiane", "Maria Eduarda"] }, { "r": "R1", "area": 5, "date": "2026-10-23", "aud": ["Gilberto", "Alexandre"] }, { "r": "R1", "area": 1, "date": "2026-10-23", "aud": ["Edison", "Thais"] }, { "r": "R1", "area": 3, "date": "2026-10-26", "aud": ["Estefani", "Sposito"] }, { "r": "R1", "area": 8, "date": "2026-10-27", "aud": ["Andres", "Kelvin"] }, { "r": "R1", "area": 6, "date": "2026-10-28", "aud": ["Edison", "Spina Neto"] }, { "r": "R1", "area": 9, "date": "2026-10-29", "aud": ["Estefani", "Alan"] }, { "r": "R2", "area": 4, "date": "2026-11-03", "aud": ["Helen Ventura", "Lidiane"] }, { "r": "R2", "area": 2, "date": "2026-11-04", "aud": ["Maria Eduarda", "Kelvin"] }, { "r": "R2", "area": 7, "date": "2026-11-05", "aud": ["Alexandre", "Alan"] }, { "r": "R2", "area": 5, "date": "2026-11-06", "aud": ["Spina Neto", "Gilberto"] }, { "r": "R2", "area": 1, "date": "2026-11-09", "aud": ["Sposito", "Thais"] }, { "r": "R2", "area": 3, "date": "2026-11-10", "aud": ["Edison", "Andres"] }, { "r": "R2", "area": 8, "date": "2026-11-11", "aud": ["Estefani", "Helen Ventura"] }, { "r": "R2", "area": 6, "date": "2026-11-12", "aud": ["Lidiane", "Sposito"] }, { "r": "R2", "area": 9, "date": "2026-11-13", "aud": ["Maria Eduarda", "Thais"] }, { "r": "R3", "area": 4, "date": "2026-11-16", "aud": ["Spina Neto", "Alexandre"] }, { "r": "R3", "area": 2, "date": "2026-11-17", "aud": ["Alan", "Gilberto"] }, { "r": "R3", "area": 7, "date": "2026-11-18", "aud": ["Kelvin", "Lidiane"] }, { "r": "R3", "area": 5, "date": "2026-11-19", "aud": ["Helen Ventura", "Maria Eduarda"] }, { "r": "R3", "area": 1, "date": "2026-11-23", "aud": ["Estefani", "Andres"] }, { "r": "R3", "area": 3, "date": "2026-11-24", "aud": ["Thais", "Edison"] }, { "r": "R3", "area": 8, "date": "2026-11-25", "aud": ["Sposito", "Spina Neto"] }, { "r": "R3", "area": 6, "date": "2026-11-26", "aud": ["Kelvin", "Alexandre"] }, { "r": "R3", "area": 9, "date": "2026-11-27", "aud": ["Sposito", "Gilberto"] }, { "r": "R4", "area": 4, "date": "2026-12-01", "aud": ["Maria Eduarda", "Alan"] }, { "r": "R4", "area": 2, "date": "2026-12-02", "aud": ["Lidiane", "Helen Ventura"] }, { "r": "R4", "area": 7, "date": "2026-12-03", "aud": ["Spina Neto", "Gilberto"] }, { "r": "R4", "area": 5, "date": "2026-12-03", "aud": ["Kelvin", "Alexandre"] }, { "r": "R4", "area": 1, "date": "2026-12-04", "aud": ["Edison", "Estefani"] }, { "r": "R4", "area": 3, "date": "2026-12-07", "aud": ["Thais", "Andres"] }, { "r": "R4", "area": 8, "date": "2026-12-08", "aud": ["Sposito", "Alan"] }, { "r": "R4", "area": 6, "date": "2026-12-09", "aud": ["Estefani", "Helen Ventura"] }, { "r": "R4", "area": 9, "date": "2026-12-10", "aud": ["Edison", "Maria Eduarda"] }, { "r": "R5", "area": 4, "date": "2026-12-14", "aud": ["Lidiane", "Gilberto"] }, { "r": "R5", "area": 2, "date": "2026-12-15", "aud": ["Alexandre", "Maria Eduarda"] }, { "r": "R5", "area": 7, "date": "2026-12-16", "aud": ["Helen Ventura", "Spina Neto"] }, { "r": "R5", "area": 5, "date": "2026-12-17", "aud": ["Alan", "Kelvin"] }, { "r": "R5", "area": 1, "date": "2026-12-18", "aud": ["Thais", "Andres"] }, { "r": "R5", "area": 3, "date": "2026-12-21", "aud": ["Estefani", "Sposito"] }, { "r": "R5", "area": 8, "date": "2026-12-22", "aud": ["Edison", "Lidiane"] }, { "r": "R5", "area": 6, "date": "2026-12-23", "aud": ["Andres", "Thais"] }, { "r": "R5", "area": 9, "date": "2026-12-28", "aud": ["Kelvin", "Sposito"] }, { "r": "R6", "area": 4, "date": "2026-12-30", "aud": ["Spina Neto", "Maria Eduarda"] }, { "r": "R6", "area": 2, "date": "2027-01-04", "aud": ["Alan", "Alexandre"] }, { "r": "R6", "area": 7, "date": "2027-01-05", "aud": ["Helen Ventura", "Kelvin"] }, { "r": "R6", "area": 5, "date": "2027-01-06", "aud": ["Lidiane", "Spina Neto"] }, { "r": "R6", "area": 1, "date": "2027-01-07", "aud": ["Sposito", "Helen Ventura"] }, { "r": "R6", "area": 3, "date": "2027-01-08", "aud": ["Alan", "Thais"] }, { "r": "R6", "area": 8, "date": "2026-12-30", "aud": ["Thais", "Gilberto"] }, { "r": "R6", "area": 6, "date": "2027-01-04", "aud": ["Estefani", "Lidiane"] }, { "r": "R6", "area": 9, "date": "2027-01-05", "aud": ["Andres", "Edison"] }] };
 const MODE = "aemco";
+const CO = null;
 const MT = MODE === "aretia";
 const PRO = true;
 const SIMPLE = MODE === "aemco";
@@ -1623,6 +1667,7 @@ function go(v) {
   if (v === "map") renderMap();
   if (v === "cal") renderCal();
   if (v === "hist") renderHist();
+  if (v === "doc" && typeof renderDocs === "function") renderDocs();
   if (v === "act") {
     fillAudSel();
     renderActs();
@@ -2118,6 +2163,13 @@ function permHint(a) {
   const au = actAuditors(a), ar = AREA[a.area] || {};
   return '<div class="sub perm">🔒 Ação: '.concat(esc(au.join(" / ") || "auditores"), " · Depois, registro e conclusão: ").concat(esc([ar.lider, ar.colider].filter(Boolean).join(" / ") || "líder da área"), "</div>");
 }
+function qstBtns(a) {
+  var b = [];
+  if (a.status !== "Em andamento" && a.status !== "Concluído") b.push('<button type="button" class="btn sm alt" data-actst="Em andamento">▶ Iniciar</button>');
+  if (a.status !== "Concluído") b.push('<button type="button" class="btn sm" style="background:var(--ok)" data-actst="Concluído">✔ Concluir</button>');
+  else b.push('<button type="button" class="btn sm alt" data-actst="Em andamento">↩ Reabrir</button>');
+  return '<div class="qst">' + b.join("") + "</div>";
+}
 function renderActList(el, list, empty) {
   el.innerHTML = list.length ? list.map((a) => {
     const ar = AREA[a.area];
@@ -2125,7 +2177,7 @@ function renderActList(el, list, empty) {
     const id = esc(a.id);
     const pill = isLate(a) ? '<span class="pill" style="--c:var(--bad)">Vencida</span>' : a.status === "Concluído" ? '<span class="pill" style="--c:var(--ok)">Concluída</span>' : a.status === "Em andamento" ? '<span class="pill" style="--c:var(--warn)">Em andamento</span>' : '<span class="pill" style="--c:var(--muted)">Aberta</span>';
     const E = canEditAct(a) ? "" : " disabled", L = canLeadAct(a) ? "" : " disabled";
-    return '<div class="card act'.concat(E ? " ro" : "", '" style="--c:').concat(ar.color, '" data-id="').concat(id, '">\n      <div class="top2"><span><b>').concat(esc(areaShort(a.area)), '</b> · <span style="color:var(').concat(SC[Math.max(si, 0)], ');font-weight:700">').concat(esc(a.senso)).concat(a.q ? " · P" + a.q : "", "</span> · ").concat(a.auditId ? "auditoria " + fmtD(a.date) : "ação avulsa " + fmtD(a.date), "</span>").concat(pill, '</div>\n      <div style="font-weight:600">').concat(esc(a.desc), '</div>\n      <div class="g">\n        <div class="field w"><label class="label" for="ac-').concat(id, '">Ação (como)</label><input type="text" id="ac-').concat(id, '" data-f="action" value="').concat(esc(a.action), '" placeholder="O que será feito"').concat(E, '></div>\n        <div class="field"><label class="label" for="rs-').concat(id, '">Responsável</label><input type="text" id="rs-').concat(id, '" data-f="resp" value="').concat(esc(a.resp), '"').concat(E, '></div>\n        <div class="field"><label class="label" for="du-').concat(id, '">Prazo</label><input type="date" id="du-').concat(id, '" data-f="due" value="').concat(esc(a.due), '"').concat(E, '></div>\n        <div class="field"><label class="label" for="st-').concat(id, '">Status</label><select id="st-').concat(id, '" data-f="status"').concat(E && L ? " disabled" : "", ">").concat(["Aberto", "Em andamento", "Concluído"].map((o) => "<option ".concat(o === a.status ? "selected" : "", ">").concat(o, "</option>")).join(""), '</select></div>\n      </div>\n      <div class="field"><label class="label" for="nt-').concat(id, '">Registro de melhoria</label><input type="text" id="nt-').concat(id, '" data-f="note" value="').concat(esc(a.note), '" placeholder="').concat(L ? "Preenchido pelo líder da área" : "O que foi feito / evidência", '"').concat(L, '></div>\n      <div class="phrow">\n        <div class="phgrp"><span class="label">Antes</span><div class="phrow"><div class="ph" data-pha="').concat(id, '"></div>').concat(E ? "" : '<label class="phadd"><input type="file" accept="image/*,.heic,.heif" multiple hidden data-actph="antes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Antes</label>', '</div></div>\n        <div class="phgrp"><span class="label">Depois</span><div class="phrow"><div class="ph" data-phd="').concat(id, '"></div>').concat(L ? "" : '<label class="phadd"><input type="file" accept="image/*,.heic,.heif" multiple hidden data-actph="depois"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Depois</label>', "</div></div>\n      </div>\n      ").concat(permHint(a), '<div style="display:flex;justify-content:flex-end"').concat(E ? " hidden" : "", ">").concat(pendingActDel === a.id ? '<span class="confirm"><span class="sub">Excluir esta ação?</span><button class="btn sm" style="background:var(--bad)" data-actdel="'.concat(id, '">Excluir</button><button class="btn alt sm" data-actcancel="1">Cancelar</button></span>') : '<button class="btn alt sm" data-actask="'.concat(id, '">Excluir ação</button>'), "</div>\n    </div>");
+    return '<div class="card act'.concat(E ? " ro" : "", '" style="--c:').concat(ar.color, '" data-id="').concat(id, '">\n      <div class="top2"><span><b>').concat(esc(areaShort(a.area)), '</b> · <span style="color:var(').concat(SC[Math.max(si, 0)], ');font-weight:700">').concat(esc(a.senso)).concat(a.q ? " · P" + a.q : "", "</span> · ").concat(a.auditId ? "auditoria " + fmtD(a.date) : "ação avulsa " + fmtD(a.date), "</span>").concat(pill, '</div>\n      <div style="font-weight:600">').concat(esc(a.desc), '</div>\n      <div class="g">\n        <div class="field w"><label class="label" for="ac-').concat(id, '">Ação (como)</label><input type="text" id="ac-').concat(id, '" data-f="action" value="').concat(esc(a.action), '" placeholder="O que será feito"').concat(E, '></div>\n        <div class="field"><label class="label" for="rs-').concat(id, '">Responsável</label><input type="text" id="rs-').concat(id, '" data-f="resp" value="').concat(esc(a.resp), '"').concat(E, '></div>\n        <div class="field"><label class="label" for="du-').concat(id, '">Prazo</label><input type="date" id="du-').concat(id, '" data-f="due" value="').concat(esc(a.due), '"').concat(E, '></div>\n        <div class="field"><label class="label" for="st-').concat(id, '">Status</label><select id="st-').concat(id, '" data-f="status"').concat(E && L ? " disabled" : "", ">").concat(["Aberto", "Em andamento", "Concluído"].map((o) => "<option ".concat(o === a.status ? "selected" : "", ">").concat(o, "</option>")).join(""), '</select></div>\n      </div>\n      <div class="field"><label class="label" for="nt-').concat(id, '">Registro de melhoria</label><input type="text" id="nt-').concat(id, '" data-f="note" value="').concat(esc(a.note), '" placeholder="').concat(L ? "Preenchido pelo líder da área" : "O que foi feito / evidência", '"').concat(L, '></div>\n      <div class="phrow">\n        <div class="phgrp"><span class="label">Antes</span><div class="phrow"><div class="ph" data-pha="').concat(id, '"></div>').concat(E ? "" : '<label class="phadd"><input type="file" accept="image/*,.heic,.heif" multiple hidden data-actph="antes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Antes</label>', '</div></div>\n        <div class="phgrp"><span class="label">Depois</span><div class="phrow"><div class="ph" data-phd="').concat(id, '"></div>').concat(L ? "" : '<label class="phadd"><input type="file" accept="image/*,.heic,.heif" multiple hidden data-actph="depois"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Depois</label>', "</div></div>\n      </div>\n      ").concat(qstBtns(a)).concat(permHint(a), '<div style="display:flex;justify-content:flex-end"').concat(E ? " hidden" : "", ">").concat(pendingActDel === a.id ? '<span class="confirm"><span class="sub">Excluir esta ação?</span><button class="btn sm" style="background:var(--bad)" data-actdel="'.concat(id, '">Excluir</button><button class="btn alt sm" data-actcancel="1">Cancelar</button></span>') : '<button class="btn alt sm" data-actask="'.concat(id, '">Excluir ação</button>'), "</div>\n    </div>");
   }).join("") : '<div class="card pad sub">'.concat(empty, "</div>");
   list.forEach((a) => {
     const p = phForAction(a);
@@ -4598,7 +4650,7 @@ async function renderMap() {
 }
 const ARETIA_A = '<svg viewBox="0 0 32 32"><path d="M16 3 29 29h-6.2L16 14.6 9.2 29H3z" fill="#F7931E"/><path d="M11.6 22.6h8.8l-1.9-3.9h-5z" fill="#F7931E" opacity=".55"/></svg>';
 const APP_URL = MT ? "https://kafkia.github.io/aretia-5s/" : "https://kafkia.github.io/aemco-5s/";
-const QR_SRC = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTgiIGhlaWdodD0iMTk4IiBjbGFzcz0ic2Vnbm8iPjxwYXRoIHRyYW5zZm9ybT0ic2NhbGUoNikiIGNsYXNzPSJxcmxpbmUiIHN0cm9rZT0iIzE2MjUzZiIgZD0iTTIgMi41aDdtMyAwaDFtMSAwaDFtMSAwaDFtMiAwaDNtMiAwaDdtLTI5IDFoMW01IDBoMW0zIDBoMm00IDBoMm00IDBoMW01IDBoMW0tMjkgMWgxbTEgMGgzbTEgMGgxbTIgMGgybTMgMGgybTEgMGgxbTEgMGgybTEgMGgxbTEgMGgzbTEgMGgxbS0yOSAxaDFtMSAwaDNtMSAwaDFtMiAwaDFtMyAwaDFtNCAwaDFtMyAwaDFtMSAwaDNtMSAwaDFtLTI5IDFoMW0xIDBoM20xIDBoMW00IDBoMW01IDBoMm0xIDBoMW0xIDBoMW0xIDBoM20xIDBoMW0tMjkgMWgxbTUgMGgxbTEgMGgxbTMgMGgxbTIgMGgxbTEgMGg0bTEgMGgxbTUgMGgxbS0yOSAxaDdtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDdtLTIwIDFoMm0xIDBoMm0xIDBoNW0tMjAgMWgxbTIgMGgxbTEgMGgybTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTEgMGgxbTIgMGgxbTEgMGgxbS0yMiAxaDJtMyAwaDJtMiAwaDNtMSAwaDFtNCAwaDNtMiAwaDFtMiAwaDFtLTI5IDFoMW0yIDBoMm0xIDBoMW0yIDBoMW0xIDBoNG0xIDBoMm0xIDBoMW0yIDBoMm0xIDBoM20tMjggMWgzbTQgMGgxbTEgMGgzbTEgMGgxbTIgMGgxbTEgMGgybTQgMGgxbTEgMGgybS0yOCAxaDFtMSAwaDFtMSAwaDNtMSAwaDFtMSAwaDFtMSAwaDFtMSAwaDRtMyAwaDJtMiAwaDFtMSAwaDJtLTI5IDFoMW0xIDBoNG0xIDBoM20xIDBoMW0xIDBoMm0xIDBoMm0xIDBoM20tMjEgMWgxbTIgMGgzbTEgMGgybTEgMGgxbTEgMGgybTIgMGgybTMgMGgybTEgMGg0bS0yOSAxaDNtMiAwaDFtNCAwaDFtMSAwaDFtNCAwaDNtNSAwaDFtMSAwaDFtLTI2IDFoMW0yIDBoNG0yIDBoMW0xIDBoMW0yIDBoMm0yIDBoMW02IDBoMW0tMjUgMWgybTIgMGgzbTMgMGgybTEgMGgxbTQgMGgzbTEgMGgxbTIgMGgxbS0yOSAxaDFtMSAwaDFtMyAwaDFtMSAwaDVtMSAwaDFtNSAwaDJtMSAwaDJtMiAwaDJtLTI1IDFoMm01IDBoMW0yIDBoMm0xIDBoMm0xIDBoMm0xIDBoMW0zIDBoMm0tMjkgMWgxbTEgMGgxbTEgMGgzbTEzIDBoNW0xIDBoMW0tMTkgMWgxbTIgMGgxbTIgMGgxbTUgMGgxbTMgMGgxbTEgMGgzbS0yOSAxaDdtMiAwaDJtMSAwaDFtMyAwaDFtMyAwaDFtMSAwaDFtMSAwaDFtMiAwaDFtLTI4IDFoMW01IDBoMW0xIDBoMm0yIDBoMW0xIDBoM20xIDBoMW0xIDBoMW0zIDBoNW0tMjkgMWgxbTEgMGgzbTEgMGgxbTMgMGgybTMgMGgzbTIgMGg1bTMgMGgxbS0yOSAxaDFtMSAwaDNtMSAwaDFtMSAwaDFtMiAwaDFtMSAwaDFtMiAwaDJtMSAwaDFtMiAwaDZtLTI4IDFoMW0xIDBoM20xIDBoMW0yIDBoMW04IDBoMW0xIDBoMW0zIDBoM20xIDBoMW0tMjkgMWgxbTUgMGgxbTQgMGgxbTIgMGgxbTEgMGg1bTMgMGgxbTIgMGgxbS0yOCAxaDdtMSAwaDNtMSAwaDRtMSAwaDFtMiAwaDNtMiAwaDFtMSAwaDEiLz48L3N2Zz4K";
+const QR_SRC = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGAQAAAACh4MLwAAABSklEQVR42u1YsW0EMQwT4gFuJK/ukTyAAIWk7E/1AdIELN5wcffXEJRIUR/15mR8vvz6ZQfOqBp7jlrxFN9j5le8O//1BdgmMAIbUAFnP+NHE2xgCYwJ3ko87xhm2Iq3VFw3bJWoKdjbXryVhMAee1bjtOk36ZR0nWuk03NQzUi8P9ddPGqKUv7wVkuNVya8gStYB0hLWRw1a6OFlIcku47w4HJE66EFGQjwkC5Nh2mD7RhaK5SiIIc+3htqtiNVI52y87vT1muq2uQQCbNHgzJSyUZMPISxLehyzEgaYT7Y2tx60Is6I3/rXHSnfAiqzTxV3G3Xbfv18ZAh+z3nEmiUQzjxz6bQadMov7UQdIdwOuXeG84Jz2gH7AZTUmoap9cOuI/3Zu/ONjW9O2DdpcZsz5K/jVdBbbKl9ixeTasYTrP+83/V3798A+qo8Uc/d5j/AAAAAElFTkSuQmCC";
 (function() {
   const a = document.createElement("div");
   a.className = "aret";
@@ -4754,7 +4806,7 @@ async function whoAmI(greet) {
     const w = await rpc("pin_who", { p_pin: PIN });
     if (!w || !w.name) return;
     if (!USER || USER.name !== w.name || USER.role !== w.role || ((_a2 = USER.leadArea) != null ? _a2 : null) !== (w.area == null ? null : +w.area)) {
-      USER = { id: "P-" + w.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), name: w.name, role: w.role, area: w.role, leadArea: w.area == null ? null : +w.area, at: (/* @__PURE__ */ new Date()).toISOString(), consent: LGPD_V, sent: true };
+      USER = { id: "P-" + w.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), name: w.name, email: w.email || "", role: w.role, area: w.role, leadArea: w.area == null ? null : +w.area, at: (/* @__PURE__ */ new Date()).toISOString(), consent: LGPD_V, sent: true };
       try {
         localStorage.setItem("5s-user", JSON.stringify(USER));
       } catch (e) {
@@ -4851,6 +4903,411 @@ try {
 } catch (e) {
 }
 if (location.hash === "#auditar") go("aud");
+/* ===================== Multiempresa (CO) + melhorias comuns ===================== */
+/* Botões rápidos de status na ação (todas as empresas) */
+document.addEventListener("click", function (e) {
+  var b = e.target && e.target.closest && e.target.closest("[data-actst]");
+  if (!b) return;
+  var card = b.closest(".act");
+  if (!card) return;
+  var sel = card.querySelector('select[data-f="status"]');
+  if (!sel) return;
+  var a = ACTIONS.find(function (x) { return x.id === card.dataset.id; });
+  if (!a) return;
+  var st = b.dataset.actst;
+  if (st === "Concluído" && !(canLeadAct(a) || canEditAct(a))) { toast("Só o líder da área ou os auditores concluem a ação."); return; }
+  if (st !== "Concluído" && !(canEditAct(a) || canLeadAct(a))) { toast("Só os auditores desta auditoria ou o líder da área alteram a ação."); return; }
+  sel.value = st;
+  sel.dispatchEvent(new Event("change", { bubbles: true }));
+});
+/* Aba Documentos (todas as empresas) */
+function renderDocs() {
+  var v = $("view-doc");
+  if (!v) return;
+  var nm = CO ? CO.name : "AEMCO";
+  var key = CO ? CO.key.toUpperCase() : "AEMCO";
+  var docs = [
+    { t: "Kickoff do Programa 5S", d: "Apresentação do lançamento do programa: fundamentos, método 5S, ciclo quinzenal, checklist e gestão.", f: "Kickoff_5S_" + key + ".pdf", ic: "📽️" },
+    { t: "Manual do Programa 5S", d: "Documento controlado: objetivo, responsabilidades, critérios de auditoria, plano de ação e indicadores.", f: "Manual_5S_" + key + ".pdf", ic: "📘" }
+  ];
+  v.innerHTML = '<div class="card pad"><h2>Documentos do Programa 5S · ' + esc(nm) + '</h2><div class="sub">Toque para abrir ou baixar em PDF. Os arquivos ficam disponíveis também sem internet depois do primeiro acesso.</div></div>' +
+    docs.map(function (d) {
+      return '<a class="card pad doc" href="' + d.f + '" target="_blank" rel="noopener" download><span class="doc-ic">' + d.ic + '</span><span><b>' + esc(d.t) + '</b><br><span class="sub">' + esc(d.d) + '</span></span><span class="btn sm alt">PDF</span></a>';
+    }).join("");
+}
+if (!CO) { renderDocs(); }
+
+/* ---- E-mail no primeiro acesso ---- */
+function askEmail() {
+  if (!USER || USER.email || document.querySelector(".pinbox")) return;
+  var box = document.createElement("div"); box.className = "pinbox";
+  box.innerHTML = '<div class="card"><h2>Seu e-mail corporativo</h2><div class="sub">Olá, ' + esc(USER.name.split(" ")[0]) + '. Informe o e-mail que você usa na ' + esc(CO ? CO.name : "AEMCO") + ' para receber o resumo semanal do 5S (ações, notas e evolução).</div><input id="em-in" type="email" inputmode="email" autocomplete="email" placeholder="nome@empresa.com.br" aria-label="E-mail"><div class="sub" id="em-msg"></div><button class="btn acc" id="em-ok">Salvar</button><button class="btn alt" id="em-skip">Depois</button></div>';
+  document.body.appendChild(box);
+  var inp = box.querySelector("#em-in"); inp.focus();
+  var save = async function () {
+    var v = inp.value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) { box.querySelector("#em-msg").innerHTML = '<b style="color:var(--bad)">E-mail inválido.</b>'; return; }
+    try { await rpc("co_set_email", { p_co: CO ? CO.key : "aemco", p_pin: PIN, p_email: v }); USER.email = v; try { localStorage.setItem("5s-user", JSON.stringify(USER)); } catch (e) { } box.remove(); toast("E-mail salvo"); }
+    catch (e) { box.querySelector("#em-msg").innerHTML = '<b style="color:var(--bad)">Sem conexão. Tente de novo.</b>'; }
+  };
+  box.querySelector("#em-ok").onclick = save; inp.onkeydown = function (e) { if (e.key === "Enter") save(); };
+  box.querySelector("#em-skip").onclick = function () { box.remove(); };
+}
+if (!CO) {
+  var _whoA = whoAmI;
+  whoAmI = async function (greet) { await _whoA(greet); if (USER && !USER.email) setTimeout(askEmail, 900); };
+}
+/* ======================= Somente empresas novas (CO) ======================= */
+if (CO) {
+  var COCFG = { cfg: {}, people: [], updated_at: null, has_map: false, map_meta: null };
+  var ROLES = ["Auditor", "Líder", "Co-líder", "Coordenação 5S", "Diretoria"];
+  var DEF_ROUNDS = (function () {
+    var r = [{ code: "R0", label: "Auditoria Inicial", obj: "1S – diagnóstico inicial" }];
+    for (var n = 1; n <= 10; n++) { var s = Math.floor((n - 1) / 2) + 1; r.push({ code: "R" + n, label: "Rodada " + n, obj: s + "S – " + (n === 1 ? "nova auditoria (ações 15 dias)" : n % 2 ? "auditoria inicial" : "validação / avanço") }); }
+    return r;
+  })();
+  CFG.rounds = DEF_ROUNDS;
+  CFG.sched = [];
+  CFG.auditores = [];
+  var MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  var CFG_TS = 0;
+
+  function refillAreaSelects() {
+    var areaOpts = CFG.areas.map(function (a) { return '<option value="' + a.id + '">' + a.id + ". " + esc(a.name.split(" (")[0]) + "</option>"; }).join("");
+    ["x-area", "n-area"].forEach(function (id) {
+      var s = $(id); if (!s) return; var v = s.value;
+      s.innerHTML = (id === "x-area" ? '<option value="">Todas</option>' : "") + areaOpts;
+      if (v && [].some.call(s.options, function (o) { return o.value === v; })) s.value = v;
+    });
+  }
+  function applyCfg(r) {
+    COCFG = r || COCFG;
+    var c = COCFG.cfg || {};
+    var people = COCFG.people || [];
+    var src = c.areas && c.areas.length ? c.areas : CO.areas;
+    var areas = src.map(function (a, i) {
+      var o = {}; Object.keys(a).forEach(function (k) { o[k] = a[k]; });
+      o.id = +(a.id || i + 1); o.color = a.color || AREA_COLORS[i % AREA_COLORS.length]; o.apoio = a.apoio || "";
+      var L = people.filter(function (p) { return p.area != null && +p.area === o.id; });
+      var li = L.find(function (p) { return /^l[ií]der/i.test(p.role); }), co = L.find(function (p) { return /co-?l[ií]der/i.test(p.role); });
+      o.lider = li ? li.name : (a.lider || ""); o.colider = co ? co.name : (a.colider || "");
+      return o;
+    });
+    CFG.areas = areas;
+    Object.keys(AREA).forEach(function (k) { delete AREA[k]; });
+    areas.forEach(function (a) { AREA[a.id] = a; });
+    CFG.auditores = people.filter(function (p) { return /auditor|coorden/i.test(p.role); }).map(function (p) { return p.name; });
+    CFG.sched = Array.isArray(c.sched) ? c.sched : [];
+    CFG.rounds = Array.isArray(c.rounds) && c.rounds.length ? c.rounds : DEF_ROUNDS;
+    try { localStorage.setItem("5s-cocfg", JSON.stringify(COCFG)); } catch (e) { }
+    renderFilters(); renderSetup(); initCal(); refillAreaSelects(); prefillAuditor(); refreshAll();
+    if ($("view-adm") && !$("view-adm").hidden) renderAdm();
+    if ($("view-map") && !$("view-map").hidden) renderMap();
+  }
+  try { var cc = JSON.parse(localStorage.getItem("5s-cocfg") || "null"); if (cc) applyCfg(cc); else applyCfg(COCFG); } catch (e) { applyCfg(COCFG); }
+
+  var cfgPulling = false;
+  function cfgPull(force) {
+    if (!SB_ON || !PIN || cfgPulling) return Promise.resolve();
+    if (!force && Date.now() - CFG_TS < 45000) return Promise.resolve();
+    cfgPulling = true;
+    return rpc("co_cfg_get", { p_co: CO.key, p_pin: PIN }).then(function (r) {
+      CFG_TS = Date.now();
+      if (JSON.stringify(r) !== JSON.stringify(COCFG)) applyCfg(r);
+    }).catch(function () { }).then(function () { cfgPulling = false; });
+  }
+  async function cfgSave(patch) {
+    var c = {}; Object.keys(COCFG.cfg || {}).forEach(function (k) { c[k] = COCFG.cfg[k]; });
+    Object.keys(patch).forEach(function (k) { c[k] = patch[k]; });
+    await rpc("co_cfg_set", { p_co: CO.key, p_pin: PIN, p_cfg: c });
+    COCFG.cfg = c; CFG_TS = 0;
+    applyCfg(COCFG);
+    return cfgPull(true);
+  }
+  /* ---- Feriados e calendário quinzenal ---- */
+  function easter(y) { var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), da = (h + l - 7 * m + 114) % 31 + 1; return new Date(y, mo - 1, da, 12); }
+  function iso(d) { return new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); }
+  function holidays(y, extra) {
+    var fixed = ["01-01", "04-21", "05-01", "09-07", "10-12", "11-02", "11-15", "11-20", "12-24", "12-25", "12-31"];
+    var set = {};
+    [y, y + 1].forEach(function (yy) {
+      fixed.forEach(function (md) { set[yy + "-" + md] = 1; });
+      var e = easter(yy); [-48, -47, -2, 60].forEach(function (off) { var d = new Date(e); d.setDate(d.getDate() + off); set[iso(d)] = 1; });
+    });
+    (extra || []).forEach(function (s) { var m = /^(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?$/.exec(s.trim()); if (m) { var yy = m[3] || y; set[yy + "-" + ("0" + m[2]).slice(-2) + "-" + ("0" + m[1]).slice(-2)] = 1; if (!m[3]) set[(y + 1) + "-" + ("0" + m[2]).slice(-2) + "-" + ("0" + m[1]).slice(-2)] = 1; } });
+    return set;
+  }
+  function nextBiz(d, hol) { var x = new Date(d); while (x.getDay() === 0 || x.getDay() === 6 || hol[iso(x)]) x.setDate(x.getDate() + 1); return x; }
+  function genSched(kick, extra) {
+    var hol = holidays(+kick.slice(0, 4), extra);
+    var areas = CFG.areas, N = areas.length;
+    if (!N) return { sched: [], rounds: DEF_ROUNDS };
+    var perDay = Math.max(1, Math.ceil(N / 10));
+    var auds = COCFG.people.filter(function (p) { return /auditor/i.test(p.role); });
+    var load = {}; auds.forEach(function (p) { load[p.name] = 0; });
+    var lastPair = {};
+    function pick(areaId) {
+      var cand = auds.filter(function (p) { return p.area == null || +p.area !== +areaId; });
+      if (cand.length < 2) cand = auds.slice();
+      cand.sort(function (a, b) { return load[a.name] - load[b.name] || Math.random() - 0.5; });
+      var pair = cand.slice(0, 2).map(function (p) { return p.name; });
+      if (pair.length === 2 && lastPair[areaId] && lastPair[areaId].join("|") === pair.join("|") && cand.length > 2) pair[1] = cand[2].name;
+      pair.forEach(function (n) { load[n]++; });
+      lastPair[areaId] = pair;
+      return pair;
+    }
+    var sched = [], r0 = {};
+    var d = nextBiz(new Date(kick + "T12:00:00"), hol); d.setDate(d.getDate() + 1); d = nextBiz(d, hol);
+    areas.forEach(function (a, i) {
+      if (i && i % perDay === 0) { d.setDate(d.getDate() + 1); d = nextBiz(d, hol); }
+      r0[a.id] = new Date(d);
+      sched.push({ r: "R0", area: a.id, date: iso(d), aud: pick(a.id) });
+    });
+    var rounds = [DEF_ROUNDS[0]];
+    for (var n = 1; n <= 10; n++) {
+      var first = null;
+      areas.forEach(function (a) {
+        var x = new Date(r0[a.id]); x.setDate(x.getDate() + 14 * n); x = nextBiz(x, hol);
+        sched.push({ r: "R" + n, area: a.id, date: iso(x), aud: pick(a.id) });
+        if (!first || x < first) first = x;
+      });
+      var def = DEF_ROUNDS[n];
+      var last = null; sched.filter(function (s) { return s.r === "R" + n; }).forEach(function (s) { if (!last || s.date > last) last = s.date; });
+      rounds.push({ code: def.code, label: "R" + n + " · " + fmtD(iso(first)) + " a " + fmtD(last), obj: def.obj });
+    }
+    sched.sort(function (a, b) { return a.date.localeCompare(b.date) || a.area - b.area; });
+    return { sched: sched, rounds: rounds };
+  }
+  /* ---- Mapa da planta ---- */
+  var MAPIMG = null, MAPV = null, MAPST = { senso: "all", round: "last", edit: false, sel: null, open: null };
+  try { var mm = JSON.parse(localStorage.getItem("5s-mapimg") || "null"); if (mm) { MAPIMG = mm.img; MAPV = mm.v; } } catch (e) { }
+  async function mapLoad() {
+    if (!SB_ON || !PIN || !COCFG.has_map) return;
+    var v = (COCFG.cfg || {}).mapv || 1;
+    if (MAPIMG && MAPV === v) return;
+    try {
+      var r = await rpc("co_map_get", { p_co: CO.key, p_pin: PIN });
+      if (r && r.img) { MAPIMG = r.img; MAPV = v; try { localStorage.setItem("5s-mapimg", JSON.stringify({ img: MAPIMG, v: v })); } catch (e) { } }
+    } catch (e) { }
+  }
+  function pdfLib() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    return new Promise(function (res, rej) {
+      var s = document.createElement("script"); s.src = "pdf.min.js";
+      s.onload = function () { try { window.pdfjsLib.GlobalWorkerOptions.workerSrc = "pdf.worker.min.js"; } catch (e) { } res(window.pdfjsLib); };
+      s.onerror = function () { rej(new Error("pdf.js indisponível")); };
+      document.head.appendChild(s);
+    });
+  }
+  async function fileToMapImage(file) {
+    var canvas = document.createElement("canvas"), MAXW = 1600;
+    if (/pdf$/i.test(file.name) || file.type === "application/pdf") {
+      var lib = await pdfLib();
+      var buf = await file.arrayBuffer();
+      var pdf = await lib.getDocument({ data: buf }).promise;
+      var page = await pdf.getPage(1);
+      var vp0 = page.getViewport({ scale: 1 });
+      var sc = Math.min(2.5, MAXW / vp0.width);
+      var vp = page.getViewport({ scale: sc });
+      canvas.width = vp.width; canvas.height = vp.height;
+      var ctx = canvas.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport: vp }).promise;
+    } else {
+      var url = await compress(file, MAXW, 0.85);
+      var im = await new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = url; });
+      canvas.width = im.naturalWidth; canvas.height = im.naturalHeight; canvas.getContext("2d").drawImage(im, 0, 0);
+    }
+    var q = 0.82, out = canvas.toDataURL("image/jpeg", q);
+    while (out.length > 1900000 && q > 0.4) { q -= 0.1; out = canvas.toDataURL("image/jpeg", q); }
+    return { img: out, w: canvas.width, h: canvas.height };
+  }
+  function pinScore(a) {
+    var si = MAPST.senso === "all" ? currentSenso(a.id) : +MAPST.senso;
+    var r = areaSenso(a.id, si, MAPST.round);
+    if (!r && MAPST.senso === "all" && si > 0) { si = si - 1; r = areaSenso(a.id, si, MAPST.round); }
+    return { si: si, pct: r ? r.pct : null, date: r ? r.date : null };
+  }
+  function areaStats(a) {
+    var acts = ACTIONS.filter(function (x) { return +x.area === +a.id; });
+    return { total: acts.length, open: acts.filter(function (x) { return x.status === "Aberto"; }).length, prog: acts.filter(function (x) { return x.status === "Em andamento"; }).length, done: acts.filter(function (x) { return x.status === "Concluído"; }).length, late: acts.filter(isLate).length };
+  }
+  function coRenderMap() {
+    var v = $("view-map"); if (!v) return;
+    var pins = (COCFG.cfg || {}).pins || {};
+    var adm = isAdmin();
+    var chips = '<button class="chip" data-s="all" aria-pressed="' + (MAPST.senso === "all") + '">Senso atual</button>' + CFG.sensos.map(function (s, i) { return '<button class="chip" data-s="' + i + '" style="--c:var(' + SC[i] + ')" aria-pressed="' + (MAPST.senso === i) + '">' + s.code + "</button>"; }).join("");
+    var rounds = CFG.rounds.filter(function (r) { return CFG.sched.some(function (s) { return s.r === r.code; }) || AUDITS.some(function (a) { return a.round === r.code; }); });
+    var ridx = MAPST.round === "last" ? rounds.length : Math.max(0, rounds.findIndex(function (r) { return r.code === MAPST.round; }));
+    var rlabel = MAPST.round === "last" ? "Mais recente" : (function () { var r = CFG.rounds.find(function (x) { return x.code === MAPST.round; }); return r ? r.label + " · " + r.obj : MAPST.round; })();
+    v.innerHTML = '<div class="card pad"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline"><div><h2>Mapa da planta · 5S</h2><div class="sub">Cada marcador é uma área: a cor é a nota da auditoria (verde ≥ 80%, amarelo 50–79%, vermelho &lt; 50%, cinza sem auditoria) e a etiqueta mostra o Senso. Toque no marcador para ver ações e fotos da área.</div></div>' +
+      (adm ? '<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm ' + (MAPST.edit ? "acc" : "alt") + '" id="mp-edit">' + (MAPST.edit ? "✔ Concluir posicionamento" : "📍 Posicionar marcadores") + '</button><label class="btn sm alt" for="mp-file" style="display:inline-flex;align-items:center">🗺️ ' + (COCFG.has_map ? "Trocar mapa" : "Enviar mapa") + '</label><input type="file" id="mp-file" accept="image/*,.pdf,application/pdf" hidden></div>' : "") +
+      '</div><div class="chips" id="mp-senso" style="margin-top:10px">' + chips + '</div>' +
+      '<div class="mp-round"><span class="label">Rodada</span><input type="range" id="mp-rng" min="0" max="' + rounds.length + '" value="' + ridx + '" aria-label="Rodada"><b id="mp-rlab">' + esc(rlabel) + '</b></div></div>' +
+      (COCFG.has_map ? '<div class="card mp-wrap"><div class="mp-box" id="mp-box">' + (MAPIMG ? '<img src="' + MAPIMG + '" alt="Mapa da planta" draggable="false">' : '<div class="sub" style="padding:40px;text-align:center">Carregando o mapa…</div>') +
+        CFG.areas.map(function (a) {
+          var p = pins[a.id]; if (!p && !MAPST.edit) return "";
+          var sc = pinScore(a); var col = sc.pct == null ? "#9aa1ad" : sc.pct >= 0.8 ? css("--ok") : sc.pct >= 0.5 ? css("--warn") : css("--bad");
+          var k = CFG.areas.indexOf(a); var x = p ? p.x : 0.14 + (k % 5) * 0.17, y = p ? p.y : (k < 5 ? 0.14 : k < 10 ? 0.3 : 0.46);
+          return '<button type="button" class="mp-pin' + (MAPST.open === a.id ? " on" : "") + (!p ? " nopos" : "") + '" data-pin="' + a.id + '" style="left:' + (x * 100) + "%;top:" + (y * 100) + '%;--c:' + col + ';--a:' + a.color + '" title="' + esc(a.name) + '"><span class="n">' + a.id + '</span><span class="s">' + (sc.pct == null ? "–" : Math.round(sc.pct * 100) + "%") + "</span><small>" + CFG.sensos[sc.si].code + "</small></button>";
+        }).join("") + '</div>' + (MAPST.edit ? '<div class="pad sub" id="mp-hint">Arraste cada marcador até a área no mapa (ou toque no marcador e depois no lugar certo). Marcadores tracejados ainda não foram posicionados. Ao terminar, toque em <b>Concluir posicionamento</b>.</div>' : "") + '</div>' :
+        '<div class="card pad"><div class="sub">' + (adm ? "Envie o mapa da planta (foto, imagem ou PDF com o layout). Depois, posicione um marcador em cada área." : "A Coordenação ainda não enviou o mapa da planta.") + '</div></div>') +
+      '<div id="mp-panel"></div>' +
+      '<div class="card pad"><h3>Resumo por área</h3><div class="scroll"><table class="rule mp-tab"><tr><th>Área</th><th>Senso</th><th>Nota</th><th>Ações abertas</th><th>Em andamento</th><th>Vencidas</th><th>Concluídas</th></tr>' +
+      CFG.areas.map(function (a) { var sc = pinScore(a), st = areaStats(a); return '<tr data-row="' + a.id + '"><td><span class="dot" style="background:' + a.color + '"></span>' + a.id + ". " + esc(a.name.split(" (")[0]) + '</td><td>' + CFG.sensos[sc.si].code + '</td><td style="color:' + colorFor(sc.pct) + ';font-weight:700">' + pctTxt(sc.pct) + '</td><td>' + st.open + '</td><td>' + st.prog + '</td><td style="color:' + (st.late ? "var(--bad)" : "inherit") + '">' + st.late + '</td><td>' + st.done + '</td></tr>'; }).join("") + '</table></div></div>';
+    if (COCFG.has_map && !MAPIMG) mapLoad().then(function () { if (MAPIMG && !v.hidden) renderMap(); });
+    v.querySelector("#mp-senso").onclick = function (e) { var b = e.target.closest(".chip"); if (!b) return; MAPST.senso = b.dataset.s === "all" ? "all" : +b.dataset.s; renderMap(); };
+    var rng = v.querySelector("#mp-rng");
+    rng.oninput = function () { var i = +rng.value; MAPST.round = i >= rounds.length ? "last" : rounds[i].code; v.querySelector("#mp-rlab").textContent = MAPST.round === "last" ? "Mais recente" : rounds[i].label + " · " + rounds[i].obj; };
+    rng.onchange = function () { renderMap(); };
+    var fi = v.querySelector("#mp-file");
+    if (fi) fi.onchange = async function (e) {
+      var f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+      toast("Preparando o mapa…");
+      try {
+        var m = await fileToMapImage(f);
+        await rpc("co_map_set", { p_co: CO.key, p_pin: PIN, p_img: m.img, p_meta: { w: m.w, h: m.h, name: f.name, at: new Date().toISOString() } });
+        MAPIMG = m.img; MAPV = Date.now(); COCFG.has_map = true;
+        try { localStorage.setItem("5s-mapimg", JSON.stringify({ img: MAPIMG, v: MAPV })); } catch (x) { }
+        await cfgSave({ mapv: MAPV });
+        MAPST.edit = true; renderMap(); toast("Mapa salvo. Agora posicione os marcadores.");
+      } catch (x) { toast("Não foi possível salvar o mapa: " + x.message); }
+    };
+    var eb = v.querySelector("#mp-edit");
+    if (eb) eb.onclick = async function () {
+      if (MAPST.edit) { MAPST.edit = false; try { await cfgSave({ pins: pins }); toast("Marcadores salvos"); } catch (x) { toast("Não foi possível salvar: " + x.message); } }
+      else MAPST.edit = true;
+      renderMap();
+    };
+    var box = v.querySelector("#mp-box");
+    if (box) {
+      var drag = null;
+      box.addEventListener("pointerdown", function (e) {
+        var p = e.target.closest(".mp-pin"); if (!p) return;
+        if (!MAPST.edit) return;
+        drag = { id: +p.dataset.pin, el: p, moved: false }; p.setPointerCapture(e.pointerId); e.preventDefault();
+      });
+      box.addEventListener("pointermove", function (e) {
+        if (!drag) return; drag.moved = true;
+        var r = box.getBoundingClientRect(); var x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+        drag.el.style.left = x * 100 + "%"; drag.el.style.top = y * 100 + "%"; drag.el.classList.remove("nopos"); pins[drag.id] = { x: +x.toFixed(4), y: +y.toFixed(4) };
+      });
+      box.addEventListener("pointerup", function () { if (drag) { COCFG.cfg.pins = pins; if (!drag.moved) { MAPST.sel = MAPST.sel === drag.id ? null : drag.id; box.querySelectorAll(".mp-pin").forEach(function (q) { q.classList.toggle("on", +q.dataset.pin === MAPST.sel); }); } } drag = null; });
+      box.addEventListener("click", function (e) {
+        if (!MAPST.edit || MAPST.sel == null || e.target.closest(".mp-pin")) return;
+        var r = box.getBoundingClientRect(); var x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+        var el = box.querySelector('.mp-pin[data-pin="' + MAPST.sel + '"]'); if (!el) return;
+        el.style.left = x * 100 + "%"; el.style.top = y * 100 + "%"; el.classList.remove("nopos"); pins[MAPST.sel] = { x: +x.toFixed(4), y: +y.toFixed(4) }; COCFG.cfg.pins = pins;
+      });
+      box.addEventListener("click", function (e) {
+        var p = e.target.closest(".mp-pin"); if (!p || MAPST.edit) return;
+        MAPST.open = MAPST.open === +p.dataset.pin ? null : +p.dataset.pin; renderMap();
+        var pn = $("mp-panel"); if (pn && MAPST.open) pn.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+    v.querySelectorAll("[data-row]").forEach(function (tr) { tr.onclick = function () { MAPST.open = +tr.dataset.row; renderMap(); $("mp-panel").scrollIntoView({ behavior: "smooth", block: "start" }); }; });
+    renderMapPanel();
+  }
+  function renderMapPanel() {
+    var pn = $("mp-panel"); if (!pn) return;
+    var a = AREA[MAPST.open]; if (!a) { pn.innerHTML = ""; return; }
+    var data = [0, 1, 2, 3, 4].map(function (si) { return areaSenso(a.id, si, MAPST.round); });
+    var st = areaStats(a);
+    var acts = ACTIONS.filter(function (x) { return +x.area === +a.id && x.status !== "Concluído"; }).sort(function (x, y) { return (x.due || "").localeCompare(y.due || ""); }).slice(0, 8);
+    var ph = PHOTOS.filter(function (p) { return ACTIONS.some(function (x) { return +x.area === +a.id && (p.owner === x.id || p.owner === x.auditId); }) || AUDITS.some(function (x) { return +x.area === +a.id && p.owner === x.id; }); }).sort(function (x, y) { return String(y.at || "").localeCompare(String(x.at || "")); }).slice(0, 8);
+    pn.innerHTML = '<div class="card pad mp-pan" style="--c:' + a.color + '"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline"><div><h3>' + a.id + ". " + esc(a.name) + '</h3><div class="sub">Líder: ' + esc(a.lider || "–") + ' · Co-líder: ' + esc(a.colider || "–") + '</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm acc" id="mp-dash">Ver no dashboard</button><button class="btn sm alt" id="mp-acts">Ações da área</button><button class="btn sm alt" id="mp-x">Fechar</button></div></div>' +
+      '<div class="grid2" style="margin-top:10px"><div class="radar mini-r">' + radarSVG(data, { size: 320, mini: false, focus: "all", label: "Radar " + a.name }) + '</div><div><div class="kpis mp-k"><div class="card kpi"><div class="label">Abertas</div><div class="v num">' + st.open + '</div></div><div class="card kpi"><div class="label">Em andamento</div><div class="v num" style="color:var(--warn)">' + st.prog + '</div></div><div class="card kpi"><div class="label">Vencidas</div><div class="v num" style="color:' + (st.late ? "var(--bad)" : "inherit") + '">' + st.late + '</div></div><div class="card kpi"><div class="label">Concluídas</div><div class="v num" style="color:var(--ok)">' + st.done + '</div></div></div>' +
+      '<div class="label" style="margin-top:8px">Próximas ações</div>' + (acts.length ? '<div class="list">' + acts.map(function (x) { return '<div class="row"><span><b>' + esc(x.desc || "").slice(0, 90) + '</b><br><span class="sub">' + esc(x.resp || "") + (x.due ? " · prazo " + fmtD(x.due) : "") + "</span></span>" + (isLate(x) ? '<span class="pill" style="--c:var(--bad)">Vencida</span>' : x.status === "Em andamento" ? '<span class="pill" style="--c:var(--warn)">Em andamento</span>' : '<span class="pill" style="--c:var(--muted)">Aberta</span>') + "</div>"; }).join("") + "</div>" : '<p class="sub">Nenhuma ação pendente.</p>') + '</div></div>' +
+      '<div class="label" style="margin-top:10px">Últimas fotos</div><div class="ph" id="mp-ph"></div></div>';
+    phShow(pn.querySelector("#mp-ph"), ph, false);
+    pn.querySelector("#mp-dash").onclick = function () { state.area = String(a.id); $("f-area").value = String(a.id); go("dash"); renderDash(); };
+    pn.querySelector("#mp-acts").onclick = function () { go("act"); $("x-area").value = String(a.id); fillAudSel(); renderActs(); };
+    pn.querySelector("#mp-x").onclick = function () { MAPST.open = null; renderMap(); };
+  }
+  renderMap = coRenderMap;
+  /* ---- Cadastro (Coordenação) ---- */
+  var ADM = { pin: null, kick: null, extra: "" };
+  function pinMsg(name, pin) {
+    return "Olá, " + name.split(" ")[0] + "! Seu acesso ao app 5S " + CO.name + ":\n" + APP_URL + "#pin=" + pin + "\nAbra o link no celular (Chrome ou Safari), informe seu e-mail corporativo e, se quiser, instale o app na tela inicial. Seu PIN pessoal é " + pin + ".";
+  }
+  function renderAdm() {
+    var v = $("view-adm"); if (!v) return;
+    if (!isAdmin()) { v.innerHTML = '<div class="card pad"><h2>Cadastro</h2><div class="sub">Somente a Coordenação do 5S acessa esta tela.</div></div>'; return; }
+    var people = COCFG.people || [];
+    var c = COCFG.cfg || {};
+    var areaOpt = function (sel) { return '<option value="">—</option>' + CFG.areas.map(function (a) { return '<option value="' + a.id + '"' + (sel != null && +sel === a.id ? " selected" : "") + ">" + a.id + ". " + esc(a.name.split(" (")[0]) + "</option>"; }).join(""); };
+    v.innerHTML =
+      '<div class="card pad" style="display:flex;flex-direction:column;gap:10px"><div><h2>Pessoas e PINs</h2><div class="sub">Cadastre auditores, líderes e co-líderes. O app gera o PIN na hora; envie o link com o PIN pelo WhatsApp. Líderes e co-líderes precisam da área.</div></div>' +
+      '<div class="g adm-g"><div class="field"><label class="label" for="ad-nm">Nome</label><input id="ad-nm" type="text" placeholder="Nome como aparecerá no app"></div><div class="field"><label class="label" for="ad-rl">Papel</label><select id="ad-rl">' + ROLES.map(function (r) { return "<option>" + r + "</option>"; }).join("") + '</select></div><div class="field"><label class="label" for="ad-ar">Área (líderes)</label><select id="ad-ar">' + areaOpt(null) + '</select></div><div class="field"><label class="label" for="ad-em">E-mail (opcional)</label><input id="ad-em" type="email" placeholder="nome@empresa.com.br"></div></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn acc" id="ad-add">Cadastrar e gerar PIN</button></div><div id="ad-new"></div>' +
+      '<div class="scroll"><table class="rule adm-tab"><tr><th>Nome</th><th>Papel</th><th>Área</th><th>E-mail</th><th></th></tr>' + people.map(function (p) { return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + (p.area && AREA[p.area] ? p.area + ". " + esc(AREA[p.area].name.split(" (")[0]) : "–") + '</td><td>' + esc(p.email || "") + '</td><td style="white-space:nowrap"><button class="btn sm alt" data-pinr="' + p.id + '" title="Gerar novo PIN">🔑 Novo PIN</button> <button class="btn sm alt" data-pdel="' + p.id + '" title="Remover acesso">✕</button></td></tr>'; }).join("") + '</table></div></div>' +
+      '<div class="card pad" style="display:flex;flex-direction:column;gap:10px"><div><h2>Áreas</h2><div class="sub">Uma área por linha; a ordem define o número. Líder e co-líder vêm do cadastro de pessoas.</div></div><textarea id="ad-areas" rows="' + Math.max(6, CFG.areas.length + 1) + '">' + esc(CFG.areas.map(function (a) { return a.name; }).join("\n")) + '</textarea><div style="display:flex;gap:8px"><button class="btn acc" id="ad-asave">Salvar áreas</button></div></div>' +
+      '<div class="card pad" style="display:flex;flex-direction:column;gap:10px"><div><h2>Calendário de auditorias</h2><div class="sub">Informe a data do Kickoff: o app gera a Auditoria Inicial de cada área nos dias úteis seguintes e as rodadas quinzenais (R1 a R10, 1 Senso a cada 2 rodadas), sorteando duplas de auditores que não atuam na área. Feriados nacionais já são considerados.</div></div>' +
+      '<div class="g adm-g"><div class="field"><label class="label" for="ad-kick">Data do Kickoff</label><input type="date" id="ad-kick" value="' + esc(c.kickoff || "") + '"></div><div class="field w"><label class="label" for="ad-hol">Feriados/pontes extras (dd/mm, separados por vírgula)</label><input type="text" id="ad-hol" value="' + esc(c.holidays || "") + '" placeholder="ex.: 09/07, 20/11"></div></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn acc" id="ad-gen">Gerar calendário</button>' + (CFG.sched.length ? '<button class="btn alt" id="ad-clr">Limpar calendário</button>' : "") + '</div><div class="sub" id="ad-cal-info">' + (CFG.sched.length ? CFG.sched.length + " auditorias programadas · primeira em " + fmtD(CFG.sched[0].date) + " · última em " + fmtD(CFG.sched[CFG.sched.length - 1].date) : "Nenhum calendário gerado ainda.") + '</div></div>' +
+      '<div class="card pad" style="display:flex;flex-direction:column;gap:10px"><div><h2>Mapa da planta</h2><div class="sub">' + (COCFG.has_map ? "Mapa enviado. Para trocar ou posicionar marcadores, use a aba <b>Mapa</b>." : "Envie o mapa na aba <b>Mapa</b> (foto, imagem ou PDF).") + '</div></div><div><button class="btn alt" id="ad-map">Abrir o Mapa</button></div></div>' +
+      '<div class="card pad" style="display:flex;flex-direction:column;gap:10px"><div><h2>Link do app</h2><div class="sub">Compartilhe o link; cada pessoa entra com o próprio PIN.</div></div><div class="inv-qr" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><img src="' + QR_SRC + '" alt="QR code" style="width:120px;height:120px"><div><b>' + esc(APP_URL) + '</b><br><button class="btn sm alt" id="ad-copy">Copiar link</button></div></div></div>';
+    v.querySelector("#ad-add").onclick = async function () {
+      var nm = $("ad-nm").value.trim(), rl = $("ad-rl").value, ar = $("ad-ar").value, em = $("ad-em").value.trim();
+      if (!nm) return toast("Informe o nome.");
+      if (/l[ií]der/i.test(rl) && !ar) return toast("Escolha a área do líder.");
+      try {
+        var r = await rpc("co_people_add", { p_co: CO.key, p_pin: PIN, p_name: nm, p_role: rl, p_area: ar ? +ar : null, p_email: em || null });
+        showNewPin(r.name, r.pin);
+        $("ad-nm").value = ""; $("ad-em").value = "";
+        await cfgPull(true); renderAdm(); showNewPin(r.name, r.pin);
+      } catch (x) { toast("Não foi possível cadastrar: " + x.message); }
+    };
+    function showNewPin(name, pin) {
+      var el = $("ad-new"); if (!el) return;
+      var msg = pinMsg(name, pin);
+      el.innerHTML = '<div class="notice" style="display:flex;flex-direction:column;gap:8px"><div><b>' + esc(name) + '</b> · PIN <b class="num" style="font-size:20px">' + pin + '</b> <span class="sub">(anote: o PIN não é exibido de novo; se perder, gere um novo)</span></div><textarea rows="4" id="ad-msg">' + esc(msg) + '</textarea><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="inv-wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg) + '">WhatsApp</a><button class="btn sm alt" id="ad-cp">Copiar mensagem</button></div></div>';
+      el.querySelector("#ad-cp").onclick = function () { navigator.clipboard.writeText($("ad-msg").value).then(function () { toast("Mensagem copiada"); }, function () { $("ad-msg").select(); }); };
+    }
+    v.addEventListener("click", async function (e) {
+      var t = e.target;
+      if (t.dataset.pinr) { var p = people.find(function (x) { return String(x.id) === t.dataset.pinr; }); try { var r = await rpc("co_people_reset", { p_co: CO.key, p_pin: PIN, p_id: +t.dataset.pinr }); showNewPin(p ? p.name : "", r.pin); window.scrollTo({ top: 0, behavior: "smooth" }); } catch (x) { toast("Erro: " + x.message); } }
+      if (t.dataset.pdel) { if (!confirm("Remover o acesso desta pessoa?")) return; try { await rpc("co_people_del", { p_co: CO.key, p_pin: PIN, p_id: +t.dataset.pdel }); await cfgPull(true); renderAdm(); toast("Acesso removido"); } catch (x) { toast("Erro: " + x.message); } }
+    });
+    v.querySelector("#ad-asave").onclick = async function () {
+      var names = $("ad-areas").value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 40);
+      if (!names.length) return toast("Informe ao menos uma área.");
+      var areas = names.map(function (n, i) { var old = CFG.areas.find(function (a) { return a.name === n; }); return { id: i + 1, name: n, color: old ? old.color : AREA_COLORS[i % AREA_COLORS.length] }; });
+      try { await cfgSave({ areas: areas }); toast("Áreas salvas"); renderAdm(); } catch (x) { toast("Não foi possível salvar: " + x.message); }
+    };
+    v.querySelector("#ad-gen").onclick = async function () {
+      var k = $("ad-kick").value; if (!k) return toast("Informe a data do Kickoff.");
+      if (!COCFG.people.some(function (p) { return /auditor/i.test(p.role); })) toast("Dica: cadastre os auditores antes, para sortear as duplas.");
+      var hol = $("ad-hol").value.split(",").map(function (x) { return x.trim(); }).filter(Boolean);
+      var g = genSched(k, hol);
+      try { await cfgSave({ kickoff: k, holidays: hol.join(", "), sched: g.sched, rounds: g.rounds }); toast("Calendário gerado: " + g.sched.length + " auditorias"); renderAdm(); } catch (x) { toast("Não foi possível salvar: " + x.message); }
+    };
+    var clr = v.querySelector("#ad-clr"); if (clr) clr.onclick = async function () { if (!confirm("Limpar todo o calendário?")) return; try { await cfgSave({ sched: [], rounds: DEF_ROUNDS }); renderAdm(); } catch (x) { toast("Erro: " + x.message); } };
+    v.querySelector("#ad-map").onclick = function () { go("map"); };
+    v.querySelector("#ad-copy").onclick = function () { navigator.clipboard.writeText(APP_URL).then(function () { toast("Link copiado"); }); };
+  }
+  /* ---- Integração com o fluxo existente ---- */
+  var _who = whoAmI;
+  whoAmI = async function (greet) {
+    await _who(greet);
+    if (USER) {
+      var ta = $("tab-adm"); if (ta) ta.hidden = !isAdmin();
+      await cfgPull(true);
+      if (!USER.email) setTimeout(askEmail, 900);
+      renderDocs();
+    }
+  };
+  var _pull = syncPull;
+  syncPull = async function () { await _pull(); cfgPull(false); };
+  var _go = go;
+  go = function (v) { _go(v); if (v === "adm") renderAdm(); if (v === "doc") renderDocs(); if (v === "map") { mapLoad().then(function () { if (!$("view-map").hidden) renderMap(); }); } };
+  document.querySelector(".tabs").onclick = function (e) { var t = e.target.closest(".tab"); if (t) go(t.dataset.view); };
+  var _refresh = refreshAll;
+  refreshAll = function () { _refresh(); if ($("view-map") && !$("view-map").hidden) renderMap(); };
+  $("tab-map").hidden = false;
+  renderDocs();
+  if (USER) { var ta = $("tab-adm"); if (ta) ta.hidden = !isAdmin(); }
+}
+
 window.__5sOK = true;
 </script>
 
