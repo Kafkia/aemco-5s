@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 
-<meta name="app-rev" content="Rev. 25">
+<meta name="app-rev" content="Rev. 26">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" media="print" onload="this.media=&#39;all&#39;">
 <style>
@@ -5326,6 +5326,62 @@ window.__5sOK = true;
   var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
   if (ios && !standalone) btn('Instalar no iPhone', function(){ if (window.toast) toast('No Safari: toque em Compartilhar → Adicionar à Tela de Início'); });
   window.addEventListener('appinstalled', function(){ if (slot) slot.innerHTML = ''; });
+})();
+</script>
+<script>
+/* Rev. 26 · Incluir pessoa (só inclusão) para quem a Coordenação liberou (ex.: Kelvin) */
+(function(){
+  if (typeof MODE === "undefined" || MODE !== "aemco") return;
+  var PAP = [["Auditor(a)","Auditor(a)"],["Líder","Líder de área"],["Co-líder","Co-líder de área"]];
+  var ok = false;
+  function h(t){ var d = document.createElement("div"); d.innerHTML = t; return d.firstElementChild; }
+  async function check(){
+    if (!SB_ON || !PIN) return;
+    try{
+      var w = await rpc("pin_who", { p_pin: PIN }), b = document.getElementById("inc-open");
+      ok = !!(w && w.inclui);
+      if (ok && !b){ b = h('<button type="button" class="inv-btn" id="inc-open">➕ Incluir pessoa</button>'); var hd = document.querySelector(".hdr2"); if (hd) hd.insertBefore(b, hd.firstChild); b.onclick = abrir; }
+      if (b) b.hidden = !ok;
+    }catch(e){}
+  }
+  function fechar(){ var o = document.getElementById("inc-box"); if (o) o.remove(); }
+  function abrir(){
+    fechar();
+    var areas = (CFG.areas || []).map(function(a){ return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join("");
+    var o = h('<div id="inc-box" role="dialog" aria-label="Incluir pessoa" style="position:fixed;inset:0;z-index:200;background:rgba(10,20,40,.55);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:24px 14px">' +
+      '<div class="card pad" style="width:100%;max-width:460px;display:flex;flex-direction:column;gap:12px">' +
+      '<h2>Incluir pessoa no 5S</h2><div class="sub" style="font-size:13px;color:var(--muted)">Você pode <b>incluir</b> novos integrantes (Auditor, Líder ou Co-líder). Trocar PIN, mudar papel ou remover alguém continua com a Coordenação 5S.</div>' +
+      '<div class="field"><label class="label" for="inc-nm">Nome</label><input type="text" id="inc-nm" maxlength="60" placeholder="Nome e sobrenome" autocomplete="off"></div>' +
+      '<div class="field"><label class="label" for="inc-rl">Papel</label><select id="inc-rl">' + PAP.map(function(p){ return '<option value="' + p[0] + '">' + p[1] + '</option>'; }).join("") + '</select></div>' +
+      '<div class="field" id="inc-arw" hidden><label class="label" for="inc-ar">Área</label><select id="inc-ar"><option value="">Escolha…</option>' + areas + '</select></div>' +
+      '<div class="field"><label class="label" for="inc-em">E-mail corporativo (opcional)</label><input type="text" id="inc-em" inputmode="email" maxlength="80" autocomplete="off"></div>' +
+      '<div id="inc-res"></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn acc" id="inc-go">Incluir e gerar PIN</button><button class="btn alt" id="inc-x">Fechar</button></div></div></div>');
+    document.body.appendChild(o);
+    var $$ = function(id){ return document.getElementById(id); };
+    $$("inc-x").onclick = fechar; o.addEventListener("click", function(e){ if (e.target === o) fechar(); });
+    $$("inc-rl").onchange = function(){ $$("inc-arw").hidden = this.value === "Auditor(a)"; };
+    $$("inc-nm").focus();
+    $$("inc-go").onclick = async function(){
+      var nm = $$("inc-nm").value.trim(), rl = $$("inc-rl").value, ar = $$("inc-ar").value, em = $$("inc-em").value.trim(), res = $$("inc-res");
+      if (nm.length < 2) return toast("Informe o nome.");
+      if (rl !== "Auditor(a)" && !ar) return toast("Escolha a área.");
+      if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return toast("E-mail inválido.");
+      var a = (CFG.areas || []).find(function(x){ return String(x.id) === String(ar); });
+      this.disabled = true;
+      try{
+        var r = await rpc("co_people_include", { p_co: "aemco", p_pin: PIN, p_name: nm, p_role: rl, p_area: ar ? +ar : null, p_email: em || null, p_area_name: a ? a.name : null });
+        var msg = "Olá, " + r.name.split(" ")[0] + "! Seu acesso ao app 5S AEMCO:\n" + APP_URL + "#pin=" + r.pin + "\nAbra o link no celular (Chrome ou Safari) e, se quiser, instale o app na tela inicial. Seu PIN pessoal é " + r.pin + ". Não compartilhe o seu PIN.";
+        res.innerHTML = '<div class="notice" style="display:flex;flex-direction:column;gap:8px"><div><b>' + esc(r.name) + '</b> · ' + esc(r.role) + ' · PIN <b class="num" style="font-size:20px">' + esc(r.pin) + '</b><div style="font-size:12px;color:var(--muted)">Anote: o PIN não aparece de novo. Se a pessoa perder, a Coordenação gera outro.</div></div>' +
+          '<textarea rows="4" id="inc-msg" style="width:100%">' + esc(msg) + '</textarea><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" id="inc-cp">Copiar mensagem</button><a class="btn sm acc" style="text-decoration:none;display:inline-flex;align-items:center" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(msg) + '">Enviar pelo WhatsApp</a></div></div>';
+        $$("inc-cp").onclick = function(){ var t = $$("inc-msg"); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function(){ toast("Mensagem copiada"); }, function(){ t.select(); }); };
+        $$("inc-nm").value = ""; $$("inc-em").value = "";
+      }catch(e){ toast(/permiss/i.test(e.message) ? "Sem permissão para incluir pessoas." : e.message); }
+      this.disabled = false;
+    };
+  }
+  setTimeout(check, 1200); var tries = 0, iv = setInterval(function(){ if (ok || ++tries > 40) { clearInterval(iv); return; } check(); }, 15000);
+  document.addEventListener("visibilitychange", function(){ if (!document.hidden) check(); });
 })();
 </script>
 </body></html>
