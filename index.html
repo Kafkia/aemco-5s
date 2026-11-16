@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 
-<meta name="app-rev" content="Rev. 27">
+<meta name="app-rev" content="Rev. 28">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" media="print" onload="this.media=&#39;all&#39;">
 <style>
@@ -518,11 +518,11 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
   <!-- ======================= AUDITAR ======================= -->
   <section id="view-aud" class="view" hidden style="flex-direction:column;gap:16px">
     <div id="aud-setup" class="card pad" style="display:flex;flex-direction:column;gap:14px">
-      <div><h2>Nova auditoria</h2><div class="sub">Escolha a área e o Senso. Hoje: <span id="today-lbl"></span></div></div>
+      <div><h2>Nova auditoria</h2><div class="sub">Escolha a área. Os Sensos são marcados automaticamente. Hoje: <span id="today-lbl"></span></div></div>
       <div id="aud-suggest"></div>
       <div><span class="label">Área</span><div class="areas" id="a-areas" style="margin-top:6px"></div></div>
-      <div><span class="label">Senso auditado</span><div class="chips" id="a-senso" style="margin-top:6px"></div>
-        <label style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:14px"><input type="checkbox" id="a-prev"> Incluir Sensos anteriores (verificar manutenção)</label></div>
+      <div><span class="label">Sensos auditados (acumulativo)</span><div class="chips" id="a-senso" style="margin-top:6px"></div>
+        <div class="sub" id="a-senso-info" style="margin-top:8px;font-size:14px"></div></div>
       <div class="filters">
         <div class="field"><label class="label" for="a-date">Data</label><input type="date" id="a-date"></div>
         <div class="field"><label class="label" for="a-aud1">Auditor 1</label><select id="a-aud1"></select></div>
@@ -653,11 +653,12 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
       <div><div class="label">Instrução de Trabalho</div><h2>Operacionalização do Programa 5S no app</h2></div>
       <div class="it-head">
         <div><span class="label">Código</span><b>IT-5S-01</b></div>
-        <div><span class="label">Revisão</span><b>01 · 01/10/2026</b></div>
+        <div><span class="label">Revisão</span><b>02 · 16/11/2026</b></div>
         <div><span class="label">Elaboração</span><b>Lean Way Consulting</b></div>
         <div><span class="label">Aprovação</span><b>Comitê 5S AEMCO</b></div>
       </div>
-      <p><b>Objetivo:</b> padronizar como as auditorias 5S são programadas, executadas no celular, registradas e acompanhadas, para que cada área avance <b>1 Senso por mês</b> (1S out/26 → 5S fev/27).</p>
+      <p><b>Objetivo:</b> padronizar como as auditorias 5S são programadas, executadas no celular, registradas e acompanhadas, para que cada área avance de Senso mantendo os anteriores na meta (plano: 1S out/26 → 5S fev/27; sustentação quinzenal até jun/27).</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn acc" href="Manual_5S_AEMCO.pdf" target="_blank" rel="noopener" download style="text-decoration:none">⬇ Baixar o manual (PDF)</a><a class="btn alt" href="Kickoff_5S_AEMCO.pdf" target="_blank" rel="noopener" download style="text-decoration:none">📽️ Apresentação do Kickoff (PDF)</a></div>
       <p><b>Aplicação:</b> as 9 áreas da AEMCO, seus Líderes, Co-líderes e Apoio, os 13 auditores do Comitê e o Coordenador do 5S.</p>
     </div>
 
@@ -674,20 +675,20 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
 
     <div class="card pad" style="display:flex;flex-direction:column;gap:12px">
       <h3>2. Ciclo de cada Senso (quinzenal)</h3>
-      <div class="cyc"><span>Auditoria Inicial</span><i>→</i><span>Plano de Ação</span><i>→</i><span>Ações em até 15 dias</span><i>→</i><span>Nova auditoria</span><i>→</i><span>≥ 80% OK: avança de Senso</span></div>
-      <p class="sub">Abaixo de 80%, a área repete o ciclo no mesmo Senso. A auditoria de um Senso pode incluir os Sensos anteriores para verificar a manutenção.</p>
+      <div class="cyc"><span>Auditoria Inicial</span><i>→</i><span>Plano de Ação</span><i>→</i><span>Ações em até 15 dias</span><i>→</i><span>Nova auditoria</span><i>→</i><span>≥ 80% em todos os Sensos: avança</span></div>
+      <p class="sub"><b>A auditoria é acumulativa:</b> a área no 2S responde 1S + 2S; no 3S, 1S + 2S + 3S; e assim até o 5S. Para avançar, <b>todos</b> os Sensos auditados precisam de 80% ou mais na mesma auditoria. Exemplo: área no 3S com 2S e 3S na meta, mas 1S com 60% → <b>não avança</b> para o 4S. A área que bate a meta já passa para o próximo Senso na auditoria seguinte. Senso validado não é retirado.</p>
     </div>
 
     <div class="card pad" style="display:flex;flex-direction:column;gap:12px">
       <h3>2.1 Auditoria no celular – Dupla de auditores</h3>
       <ol class="steps">
         <li><b class="t">Ver a agenda</b>Aba <b>Calendário</b> → filtre pelo seu nome. Cada item mostra a área, a data e o objetivo da rodada (ex.: “1S – nova auditoria”).</li>
-        <li><b class="t">Iniciar no posto</b>Na data prevista, toque em <b>Auditar</b> no item do calendário (ou vá na aba <b>Auditar</b>). Área, dupla e Senso já vêm preenchidos; confira a data.</li>
-        <li><b class="t">Escolher o Senso</b>Use o Senso do mês. Marque <b>Incluir Sensos anteriores</b> quando quiser verificar se a área mantém o que já foi conquistado.</li>
+        <li><b class="t">Iniciar no posto</b>Na data prevista, toque em <b>Auditar</b> no item do calendário (ou vá na aba <b>Auditar</b>). Área, dupla e Sensos já vêm preenchidos; confira a data.</li>
+        <li><b class="t">Conferir os Sensos</b>O app marca sozinho os Sensos da área, do 1S até o Senso em que ela está, e traz as perguntas de todos eles. Só a Coordenação 5S altera essa marcação.</li>
         <li><b class="t">Responder no local</b>Para cada pergunta, observe o posto e toque <b>Sim · OK</b> (situação adequada) ou <b>Não · Não OK</b> (a corrigir). Em todo Não OK, escreva a observação: o que, onde e quanto.</li>
         <li><b class="t">Fotografar e planejar</b>Em cada Não OK, toque em <b>Câmera</b> ou <b>Galeria</b> quantas vezes precisar. <b>Cada foto vira uma ação</b>: logo abaixo dela, preencha a ação (como), o responsável (quem) e o prazo (quando). A auditoria só pode ser salva com todas essas ações preenchidas. Use <b>Fotos gerais da auditoria</b> para a visão geral da área e o quadro 5S. As fotos são reduzidas automaticamente para não pesar no celular.</li>
-        <li><b class="t">Salvar e gerar o Plano de Ação</b>Toque em <b>Salvar auditoria</b>. Mostre ao Líder a nota e o veredito (avança ou mantém o Senso) e o app abre o <b>Passo 2 · Plano de Ação desta auditoria</b>: cada Não OK já vira uma ação, com a foto do problema. Preencha ali mesmo, com o Líder, a ação, o responsável e o prazo; use <b>+ Ação extra</b> para outras melhorias e <b>Relatório com fotos</b> para gerar o PDF.</li>
-        <li><b class="t">Enviar a auditoria</b>Toque em <b>Baixar esta auditoria (.xlsx)</b> e, se houver fotos, em <b>Baixar fotos (.json)</b>. Envie os arquivos para a pasta <b>App 5S AEMCO › Dados › Importar</b> (OneDrive/SharePoint) ou pelo WhatsApp para o Coordenador do 5S. Até ser consolidada, a auditoria aparece com o aviso “não salva na base”.</li>
+        <li><b class="t">Salvar e gerar o Plano de Ação</b>Toque em <b>Salvar auditoria</b>. Mostre ao Líder a nota de cada Senso e o veredito (avança ou não avança) e o app abre o <b>Passo 2 · Plano de Ação desta auditoria</b>: cada Não OK já vira uma ação, com a foto do problema. Preencha ali mesmo, com o Líder, a ação, o responsável e o prazo; use <b>+ Ação extra</b> para outras melhorias e <b>Relatório com fotos</b> para gerar o PDF.</li>
+        <li><b class="t">Conferir o envio</b>A auditoria é enviada sozinha para a base online. Confira o selo no topo: <b>Online · sincronizado</b>. Sem internet, o app guarda tudo e envia quando a conexão voltar.</li>
       </ol>
     </div>
 
@@ -715,10 +716,10 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
     <div class="card pad" style="display:flex;flex-direction:column;gap:12px">
       <h3>3.1 Base online e backup</h3>
       <ol class="steps">
-        <li><b class="t">PIN da equipe</b>No primeiro uso de cada celular, o app pede o <b>PIN da equipe</b> (informado pelo coordenador). Com ele, todos registram e consultam as mesmas auditorias, ações e fotos.</li>
+        <li><b class="t">PIN pessoal</b>Cada pessoa entra com o seu <b>PIN pessoal</b> de 6 números (enviado pela Coordenação 5S). Com ele, todos registram e consultam as mesmas auditorias, ações e fotos.</li>
         <li><b class="t">Sincronização automática</b>O selo no topo mostra <b>Online · sincronizado</b>. Sem internet, o app continua funcionando e envia tudo sozinho quando a conexão voltar (selo <b>Offline · pendentes</b>).</li>
         <li><b class="t">Backup no OneDrive</b>No notebook (Chrome ou Edge), aba <b>Dados › Pasta de backup (OneDrive)</b>: escolha a pasta <b>Aretia › 01 - 5S</b>. A cada sincronização o app grava ali <b>Base_Auditorias_5S.xlsx</b>, <b>Fotos_5S.json</b> e uma cópia diária em <b>Historico</b>.</li>
-        <li><b class="t">Trocar o PIN</b>O coordenador troca o PIN no Supabase; quem estiver com o PIN antigo recebe o pedido do novo PIN automaticamente.</li>
+        <li><b class="t">Perdi o PIN</b>Peça um novo à Coordenação 5S. O PIN antigo deixa de funcionar.</li>
       </ol>
     </div>
 
@@ -730,6 +731,7 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
         <tr><td><b>Mapa de calor</b></td><td>% de OK por área e Senso. Verde ≥ 80%, amarelo 50–79%, vermelho &lt; 50%.</td><td>Priorizar apoio às áreas vermelhas.</td></tr>
         <tr><td><b>Evolução por rodada</b></td><td>Nota de cada rodada quinzenal.</td><td>Área sem evolução em 2 rodadas: Comitê visita a área.</td></tr>
         <tr><td><b>Áreas com Senso validado</b></td><td>Quantas das 9 áreas já atingiram 80% no Senso da meta do mês.</td><td>Meta: 9/9 ao fim de cada mês.</td></tr>
+        <tr><td><b>Senso atual</b></td><td>Senso em que a área está. Avança quando todos os Sensos, do 1S até ele, ficam com 80% ou mais na mesma auditoria.</td><td>Área parada no mesmo Senso por 2 rodadas: apoio do Comitê.</td></tr>
       </table></div>
     </div>
 
@@ -738,9 +740,10 @@ window.addEventListener('load',function(){setTimeout(function(){if(!window.__5sO
       <div class="scroll"><table class="rule">
         <tr><th>Regra</th><th>Padrão</th></tr>
         <tr><td>Resposta</td><td>Sim = OK (adequado) · Não = Não OK (a corrigir). Observação obrigatória em Não OK.</td></tr>
-        <tr><td>Nota</td><td>% de OK das perguntas respondidas no Senso.</td></tr>
-        <tr><td>Avanço</td><td>≥ 80% de OK no Senso (proposta – validar com o Comitê). Avanço eliminatório.</td></tr>
-        <tr><td>Frequência</td><td>Quinzenal, 1 área por dia, conforme o calendário; mesma área a cada 14 dias.</td></tr>
+        <tr><td>Nota</td><td>% de OK das perguntas respondidas em cada Senso.</td></tr>
+        <tr><td>Auditoria acumulativa</td><td>A auditoria sempre inclui todos os Sensos, do 1S até o Senso atual da área (5 perguntas por Senso).</td></tr>
+        <tr><td>Avanço</td><td>≥ 80% de OK em <b>todos</b> os Sensos auditados, na mesma auditoria. Um Senso abaixo de 80% impede o avanço, mesmo com os demais na meta. Quem bate a meta avança já na auditoria seguinte.</td></tr>
+        <tr><td>Frequência</td><td>Quinzenal, conforme o calendário (até jun/27); mesma área a cada 14 dias. De mar a jun/27: sustentação, com auditoria dos 5 Sensos.</td></tr>
         <tr><td>Auditoria cruzada</td><td>O auditor não audita a área onde atua.</td></tr>
         <tr><td>Foto × ação</td><td>Cada foto de um Não OK gera 1 ação, com ação, responsável e prazo obrigatórios antes de salvar a auditoria. Fotos em perguntas OK são evidência (sem ação).</td></tr>
         <tr><td>Prazo das ações</td><td>Todas concluídas até a nova auditoria (15 dias).</td></tr>
@@ -793,7 +796,7 @@ var __objRest = (source, exclude) => {
   return target;
 };
 var _a, _b;
-const CFG = { "sensos": [{ "code": "1S", "jp": "Seiri", "pt": "Utilização", "qs": ["Os itens neste local são realmente necessários para as atividades diárias?", "Todos os materiais, ferramentas e documentos do local foram utilizados nos últimos 30 dias?", "Todos os itens armazenados têm uso definido (não há itens guardados apenas “por precaução”)?", "Os materiais obsoletos ou vencidos foram removidos?", "O espaço de trabalho está livre de acúmulos desnecessários?"] }, { "code": "2S", "jp": "Seiton", "pt": "Organização", "qs": ["Cada item tem um local definido, identificado e padronizado?", "Os materiais mais usados estão posicionados nos locais de fácil acesso?", "É possível localizar rapidamente uma ferramenta ou documento sem perguntar a alguém?", "Existe uma lógica visual clara na disposição dos itens (por frequência, tipo ou tamanho)?", "Há indicadores visuais (rótulos, cores, sinalizações) que facilitam a localização?"] }, { "code": "3S", "jp": "Seiso", "pt": "Limpeza", "qs": ["O ambiente está limpo e livre de sujeiras visíveis?", "Os colaboradores participam ativamente da limpeza do próprio posto?", "O local está livre de acúmulo de sujeira que possa esconder problemas (vazamentos, desgastes, falhas)?", "Existem planos ou rotinas de limpeza diárias e semanais documentadas?", "São utilizadas inspeções durante a limpeza para identificar anomalias?"] }, { "code": "4S", "jp": "Seiketsu", "pt": "Padronização", "qs": ["Existem padrões visuais (etiquetas, cores, quadros) padronizados e mantidos?", "Os procedimentos de limpeza, ordenação e descarte estão documentados e visíveis?", "Todos os setores seguem os mesmos critérios para organização e limpeza?", "As auditorias e treinamentos de 5S são realizados periodicamente?", "Há controle sobre o uso correto de EPIs e higiene pessoal?"] }, { "code": "5S", "jp": "Shitsuke", "pt": "Autodisciplina", "qs": ["Os colaboradores seguem as rotinas do 5S espontaneamente, sem necessidade de cobrança?", "Existe um sistema de reconhecimento ou feedback sobre o cumprimento do 5S?", "Os líderes praticam e reforçam o 5S no dia a dia?", "Há um compromisso claro com a melhoria contínua e a cultura de excelência?", "Os desvios são corrigidos prontamente e usados como aprendizado?"] }], "areas": [{ "id": 1, "name": "Logística (Expedição / CD)", "color": "#E60073", "lider": "Steve", "colider": "William", "apoio": "Vanessa" }, { "id": 2, "name": "Montagem", "color": "#92D050", "lider": "Maicon", "colider": "André", "apoio": "Henrique" }, { "id": 3, "name": "Almoxarifado Usinados", "color": "#FFFF00", "lider": "Matheus", "colider": "Leonardo", "apoio": "Ana" }, { "id": 4, "name": "Usinagem", "color": "#FF0000", "lider": "Ericson", "colider": "Jeferson", "apoio": "Vinícius" }, { "id": 5, "name": "Manutenção", "color": "#000000", "lider": "Rodrigo", "colider": "Nickolas", "apoio": "Carlos Eduardo" }, { "id": 6, "name": "Facilities (Portaria, Banheiros, Refeitório, Estac.)", "color": "#00A1DA", "lider": "Luciano", "colider": "Gabriel", "apoio": "Gustavo" }, { "id": 7, "name": "Trefila", "color": "#002060", "lider": "Luis", "colider": "Marcelo", "apoio": "Ângelo" }, { "id": 8, "name": "Almoxarifado Comprado", "color": "#7030A0", "lider": "Elton", "colider": "Marcelo", "apoio": "Thales" }, { "id": 9, "name": "Administrativo", "color": "#FF9900", "lider": "Wallace", "colider": "Braulio", "apoio": "Igor" }], "auditores": ["Andres", "Sposito", "Gilberto", "Alexandre", "Helen Ventura", "Alan", "Lidiane", "Maria Eduarda", "Edison", "Estefani", "Thais", "Kelvin", "Spina Neto", "Cristiano", "Kandi", "Homar", "João Bosco (Lean Way)"], "rounds": [{ "code": "R0", "label": "Auditoria Inicial", "obj": "1S – diagnóstico inicial" }, { "code": "R1", "label": "Out – 1ª quinzena", "obj": "1S – nova auditoria (ações 15 dias)" }, { "code": "R2", "label": "Out – 2ª quinzena", "obj": "1S – validação / avanço" }, { "code": "R3", "label": "Nov – 1ª quinzena", "obj": "2S – auditoria inicial" }, { "code": "R4", "label": "Nov – 2ª quinzena", "obj": "2S – validação / avanço" }, { "code": "R5", "label": "Dez – 1ª quinzena", "obj": "3S – auditoria inicial" }, { "code": "R6", "label": "Dez – 2ª quinzena", "obj": "3S – validação / avanço" }], "sched": [{ "r": "R0", "area": 4, "date": "2026-09-23", "aud": [] }, { "r": "R0", "area": 2, "date": "2026-10-06", "aud": ["Gilberto", "Alexandre"] }, { "r": "R0", "area": 7, "date": "2026-10-07", "aud": ["Helen Ventura", "Kelvin"] }, { "r": "R0", "area": 5, "date": "2026-10-08", "aud": ["Alan", "Spina Neto"] }, { "r": "R0", "area": 1, "date": "2026-10-09", "aud": ["Andres", "Lidiane"] }, { "r": "R0", "area": 3, "date": "2026-10-13", "aud": ["Sposito", "Maria Eduarda"] }, { "r": "R0", "area": 8, "date": "2026-10-14", "aud": ["Edison", "Estefani"] }, { "r": "R0", "area": 6, "date": "2026-10-15", "aud": ["Thais", "Gilberto"] }, { "r": "R0", "area": 9, "date": "2026-10-16", "aud": ["Andres", "Alexandre"] }, { "r": "R1", "area": 4, "date": "2026-10-20", "aud": ["Kelvin", "Alan"] }, { "r": "R1", "area": 2, "date": "2026-10-21", "aud": ["Spina Neto", "Helen Ventura"] }, { "r": "R1", "area": 7, "date": "2026-10-22", "aud": ["Lidiane", "Maria Eduarda"] }, { "r": "R1", "area": 5, "date": "2026-10-23", "aud": ["Gilberto", "Alexandre"] }, { "r": "R1", "area": 1, "date": "2026-10-23", "aud": ["Edison", "Thais"] }, { "r": "R1", "area": 3, "date": "2026-10-26", "aud": ["Estefani", "Sposito"] }, { "r": "R1", "area": 8, "date": "2026-10-27", "aud": ["Andres", "Kelvin"] }, { "r": "R1", "area": 6, "date": "2026-10-28", "aud": ["Edison", "Spina Neto"] }, { "r": "R1", "area": 9, "date": "2026-10-29", "aud": ["Estefani", "Alan"] }, { "r": "R2", "area": 4, "date": "2026-11-03", "aud": ["Helen Ventura", "Lidiane"] }, { "r": "R2", "area": 2, "date": "2026-11-04", "aud": ["Maria Eduarda", "Kelvin"] }, { "r": "R2", "area": 7, "date": "2026-11-05", "aud": ["Alexandre", "Alan"] }, { "r": "R2", "area": 5, "date": "2026-11-06", "aud": ["Spina Neto", "Gilberto"] }, { "r": "R2", "area": 1, "date": "2026-11-09", "aud": ["Sposito", "Thais"] }, { "r": "R2", "area": 3, "date": "2026-11-10", "aud": ["Edison", "Andres"] }, { "r": "R2", "area": 8, "date": "2026-11-11", "aud": ["Estefani", "Helen Ventura"] }, { "r": "R2", "area": 6, "date": "2026-11-12", "aud": ["Lidiane", "Sposito"] }, { "r": "R2", "area": 9, "date": "2026-11-13", "aud": ["Maria Eduarda", "Thais"] }, { "r": "R3", "area": 4, "date": "2026-11-16", "aud": ["Spina Neto", "Alexandre"] }, { "r": "R3", "area": 2, "date": "2026-11-17", "aud": ["Alan", "Gilberto"] }, { "r": "R3", "area": 7, "date": "2026-11-18", "aud": ["Kelvin", "Lidiane"] }, { "r": "R3", "area": 5, "date": "2026-11-19", "aud": ["Helen Ventura", "Maria Eduarda"] }, { "r": "R3", "area": 1, "date": "2026-11-23", "aud": ["Estefani", "Andres"] }, { "r": "R3", "area": 3, "date": "2026-11-24", "aud": ["Thais", "Edison"] }, { "r": "R3", "area": 8, "date": "2026-11-25", "aud": ["Sposito", "Spina Neto"] }, { "r": "R3", "area": 6, "date": "2026-11-26", "aud": ["Kelvin", "Alexandre"] }, { "r": "R3", "area": 9, "date": "2026-11-27", "aud": ["Sposito", "Gilberto"] }, { "r": "R4", "area": 4, "date": "2026-12-01", "aud": ["Maria Eduarda", "Alan"] }, { "r": "R4", "area": 2, "date": "2026-12-02", "aud": ["Lidiane", "Helen Ventura"] }, { "r": "R4", "area": 7, "date": "2026-12-03", "aud": ["Spina Neto", "Gilberto"] }, { "r": "R4", "area": 5, "date": "2026-12-03", "aud": ["Kelvin", "Alexandre"] }, { "r": "R4", "area": 1, "date": "2026-12-04", "aud": ["Edison", "Estefani"] }, { "r": "R4", "area": 3, "date": "2026-12-07", "aud": ["Thais", "Andres"] }, { "r": "R4", "area": 8, "date": "2026-12-08", "aud": ["Sposito", "Alan"] }, { "r": "R4", "area": 6, "date": "2026-12-09", "aud": ["Estefani", "Helen Ventura"] }, { "r": "R4", "area": 9, "date": "2026-12-10", "aud": ["Edison", "Maria Eduarda"] }, { "r": "R5", "area": 4, "date": "2026-12-14", "aud": ["Lidiane", "Gilberto"] }, { "r": "R5", "area": 2, "date": "2026-12-15", "aud": ["Alexandre", "Maria Eduarda"] }, { "r": "R5", "area": 7, "date": "2026-12-16", "aud": ["Helen Ventura", "Spina Neto"] }, { "r": "R5", "area": 5, "date": "2026-12-17", "aud": ["Alan", "Kelvin"] }, { "r": "R5", "area": 1, "date": "2026-12-18", "aud": ["Thais", "Andres"] }, { "r": "R5", "area": 3, "date": "2026-12-21", "aud": ["Estefani", "Sposito"] }, { "r": "R5", "area": 8, "date": "2026-12-22", "aud": ["Edison", "Lidiane"] }, { "r": "R5", "area": 6, "date": "2026-12-23", "aud": ["Andres", "Thais"] }, { "r": "R5", "area": 9, "date": "2026-12-28", "aud": ["Kelvin", "Sposito"] }, { "r": "R6", "area": 4, "date": "2026-12-30", "aud": ["Spina Neto", "Maria Eduarda"] }, { "r": "R6", "area": 2, "date": "2027-01-04", "aud": ["Alan", "Alexandre"] }, { "r": "R6", "area": 7, "date": "2027-01-05", "aud": ["Helen Ventura", "Kelvin"] }, { "r": "R6", "area": 5, "date": "2027-01-06", "aud": ["Lidiane", "Spina Neto"] }, { "r": "R6", "area": 1, "date": "2027-01-07", "aud": ["Sposito", "Helen Ventura"] }, { "r": "R6", "area": 3, "date": "2027-01-08", "aud": ["Alan", "Thais"] }, { "r": "R6", "area": 8, "date": "2026-12-30", "aud": ["Thais", "Gilberto"] }, { "r": "R6", "area": 6, "date": "2027-01-04", "aud": ["Estefani", "Lidiane"] }, { "r": "R6", "area": 9, "date": "2027-01-05", "aud": ["Andres", "Edison"] }] };
+const CFG = {"sensos": [{"code": "1S", "jp": "Seiri", "pt": "Utilização", "qs": ["Os itens neste local são realmente necessários para as atividades diárias?", "Todos os materiais, ferramentas e documentos do local foram utilizados nos últimos 30 dias?", "Todos os itens armazenados têm uso definido (não há itens guardados apenas “por precaução”)?", "Os materiais obsoletos ou vencidos foram removidos?", "O espaço de trabalho está livre de acúmulos desnecessários?"]}, {"code": "2S", "jp": "Seiton", "pt": "Organização", "qs": ["Cada item tem um local definido, identificado e padronizado?", "Os materiais mais usados estão posicionados nos locais de fácil acesso?", "É possível localizar rapidamente uma ferramenta ou documento sem perguntar a alguém?", "Existe uma lógica visual clara na disposição dos itens (por frequência, tipo ou tamanho)?", "Há indicadores visuais (rótulos, cores, sinalizações) que facilitam a localização?"]}, {"code": "3S", "jp": "Seiso", "pt": "Limpeza", "qs": ["O ambiente está limpo e livre de sujeiras visíveis?", "Os colaboradores participam ativamente da limpeza do próprio posto?", "O local está livre de acúmulo de sujeira que possa esconder problemas (vazamentos, desgastes, falhas)?", "Existem planos ou rotinas de limpeza diárias e semanais documentadas?", "São utilizadas inspeções durante a limpeza para identificar anomalias?"]}, {"code": "4S", "jp": "Seiketsu", "pt": "Padronização", "qs": ["Existem padrões visuais (etiquetas, cores, quadros) padronizados e mantidos?", "Os procedimentos de limpeza, ordenação e descarte estão documentados e visíveis?", "Todos os setores seguem os mesmos critérios para organização e limpeza?", "As auditorias e treinamentos de 5S são realizados periodicamente?", "Há controle sobre o uso correto de EPIs e higiene pessoal?"]}, {"code": "5S", "jp": "Shitsuke", "pt": "Autodisciplina", "qs": ["Os colaboradores seguem as rotinas do 5S espontaneamente, sem necessidade de cobrança?", "Existe um sistema de reconhecimento ou feedback sobre o cumprimento do 5S?", "Os líderes praticam e reforçam o 5S no dia a dia?", "Há um compromisso claro com a melhoria contínua e a cultura de excelência?", "Os desvios são corrigidos prontamente e usados como aprendizado?"]}], "areas": [{"id": 1, "name": "Logística (Expedição / CD)", "color": "#E60073", "lider": "Steve", "colider": "William", "apoio": "Vanessa"}, {"id": 2, "name": "Montagem", "color": "#92D050", "lider": "Maicon", "colider": "André", "apoio": "Henrique"}, {"id": 3, "name": "Almoxarifado Usinados", "color": "#FFFF00", "lider": "Matheus", "colider": "Leonardo", "apoio": "Ana"}, {"id": 4, "name": "Usinagem", "color": "#FF0000", "lider": "Ericson", "colider": "Jeferson", "apoio": "Vinícius"}, {"id": 5, "name": "Manutenção", "color": "#000000", "lider": "Rodrigo", "colider": "Nickolas", "apoio": "Carlos Eduardo"}, {"id": 6, "name": "Facilities (Portaria, Banheiros, Refeitório, Estac.)", "color": "#00A1DA", "lider": "Luciano", "colider": "Gabriel", "apoio": "Gustavo"}, {"id": 7, "name": "Trefila", "color": "#002060", "lider": "Luis", "colider": "Marcelo", "apoio": "Ângelo"}, {"id": 8, "name": "Almoxarifado Comprado", "color": "#7030A0", "lider": "Elton", "colider": "Marcelo", "apoio": "Thales"}, {"id": 9, "name": "Administrativo", "color": "#FF9900", "lider": "Wallace", "colider": "Braulio", "apoio": "Igor"}], "auditores": ["Andres", "Sposito", "Gilberto", "Alexandre", "Helen Ventura", "Alan", "Lidiane", "Maria Eduarda", "Edison", "Estefani", "Thais", "Kelvin", "Spina Neto", "Cristiano", "Kandi", "Homar", "João Bosco (Lean Way)"], "rounds": [{"code": "R0", "label": "Auditoria Inicial", "obj": "1S – diagnóstico inicial"}, {"code": "R1", "label": "Out – 1ª quinzena", "obj": "1S – nova auditoria (ações 15 dias)"}, {"code": "R2", "label": "Out – 2ª quinzena", "obj": "1S – validação / avanço"}, {"code": "R3", "label": "Nov – 1ª quinzena", "obj": "2S – auditoria inicial"}, {"code": "R4", "label": "Nov – 2ª quinzena", "obj": "2S – validação / avanço"}, {"code": "R5", "label": "Dez – 1ª quinzena", "obj": "3S – auditoria inicial"}, {"code": "R6", "label": "Dez – 2ª quinzena", "obj": "3S – validação / avanço"}, {"code": "R7", "label": "Jan – 1ª quinzena", "obj": "4S – auditoria inicial"}, {"code": "R8", "label": "Jan – 2ª quinzena", "obj": "4S – validação / avanço"}, {"code": "R9", "label": "Fev – 1ª quinzena", "obj": "5S – auditoria inicial"}, {"code": "R10", "label": "Fev – 2ª quinzena", "obj": "5S – validação / avanço"}, {"code": "R11", "label": "Mar – 1ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R12", "label": "Mar – 2ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R13", "label": "Abr – 1ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R14", "label": "Abr – 2ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R15", "label": "Mai – 1ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R16", "label": "Mai – 2ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R17", "label": "Jun – 1ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}, {"code": "R18", "label": "Jun – 2ª quinzena", "obj": "Sustentação – auditoria dos 5 Sensos"}], "sched": [{"r": "R0", "area": 4, "date": "2026-09-23", "aud": []}, {"r": "R0", "area": 2, "date": "2026-10-06", "aud": ["Gilberto", "Alexandre"]}, {"r": "R0", "area": 7, "date": "2026-10-07", "aud": ["Helen Ventura", "Kelvin"]}, {"r": "R0", "area": 5, "date": "2026-10-08", "aud": ["Alan", "Spina Neto"]}, {"r": "R0", "area": 1, "date": "2026-10-09", "aud": ["Andres", "Lidiane"]}, {"r": "R0", "area": 3, "date": "2026-10-13", "aud": ["Sposito", "Maria Eduarda"]}, {"r": "R0", "area": 8, "date": "2026-10-14", "aud": ["Edison", "Estefani"]}, {"r": "R0", "area": 6, "date": "2026-10-15", "aud": ["Thais", "Gilberto"]}, {"r": "R0", "area": 9, "date": "2026-10-16", "aud": ["Andres", "Alexandre"]}, {"r": "R1", "area": 4, "date": "2026-10-20", "aud": ["Kelvin", "Alan"]}, {"r": "R1", "area": 2, "date": "2026-10-21", "aud": ["Spina Neto", "Helen Ventura"]}, {"r": "R1", "area": 7, "date": "2026-10-22", "aud": ["Lidiane", "Maria Eduarda"]}, {"r": "R1", "area": 5, "date": "2026-10-23", "aud": ["Gilberto", "Alexandre"]}, {"r": "R1", "area": 1, "date": "2026-10-23", "aud": ["Edison", "Thais"]}, {"r": "R1", "area": 3, "date": "2026-10-26", "aud": ["Estefani", "Sposito"]}, {"r": "R1", "area": 8, "date": "2026-10-27", "aud": ["Andres", "Kelvin"]}, {"r": "R1", "area": 6, "date": "2026-10-28", "aud": ["Edison", "Spina Neto"]}, {"r": "R1", "area": 9, "date": "2026-10-29", "aud": ["Estefani", "Alan"]}, {"r": "R2", "area": 4, "date": "2026-11-03", "aud": ["Helen Ventura", "Lidiane"]}, {"r": "R2", "area": 2, "date": "2026-11-04", "aud": ["Maria Eduarda", "Kelvin"]}, {"r": "R2", "area": 7, "date": "2026-11-05", "aud": ["Alexandre", "Alan"]}, {"r": "R2", "area": 5, "date": "2026-11-06", "aud": ["Spina Neto", "Gilberto"]}, {"r": "R2", "area": 1, "date": "2026-11-09", "aud": ["Sposito", "Thais"]}, {"r": "R2", "area": 3, "date": "2026-11-10", "aud": ["Edison", "Andres"]}, {"r": "R2", "area": 8, "date": "2026-11-11", "aud": ["Estefani", "Helen Ventura"]}, {"r": "R2", "area": 6, "date": "2026-11-12", "aud": ["Lidiane", "Sposito"]}, {"r": "R2", "area": 9, "date": "2026-11-13", "aud": ["Maria Eduarda", "Thais"]}, {"r": "R3", "area": 4, "date": "2026-11-16", "aud": ["Spina Neto", "Alexandre"]}, {"r": "R3", "area": 2, "date": "2026-11-17", "aud": ["Alan", "Gilberto"]}, {"r": "R3", "area": 7, "date": "2026-11-18", "aud": ["Kelvin", "Lidiane"]}, {"r": "R3", "area": 5, "date": "2026-11-19", "aud": ["Helen Ventura", "Maria Eduarda"]}, {"r": "R3", "area": 1, "date": "2026-11-23", "aud": ["Estefani", "Andres"]}, {"r": "R3", "area": 3, "date": "2026-11-24", "aud": ["Thais", "Edison"]}, {"r": "R3", "area": 8, "date": "2026-11-25", "aud": ["Sposito", "Spina Neto"]}, {"r": "R3", "area": 6, "date": "2026-11-26", "aud": ["Kelvin", "Alexandre"]}, {"r": "R3", "area": 9, "date": "2026-11-27", "aud": ["Sposito", "Gilberto"]}, {"r": "R4", "area": 4, "date": "2026-12-01", "aud": ["Maria Eduarda", "Alan"]}, {"r": "R4", "area": 2, "date": "2026-12-02", "aud": ["Lidiane", "Helen Ventura"]}, {"r": "R4", "area": 7, "date": "2026-12-03", "aud": ["Spina Neto", "Gilberto"]}, {"r": "R4", "area": 5, "date": "2026-12-03", "aud": ["Kelvin", "Alexandre"]}, {"r": "R4", "area": 1, "date": "2026-12-04", "aud": ["Edison", "Estefani"]}, {"r": "R4", "area": 3, "date": "2026-12-07", "aud": ["Thais", "Andres"]}, {"r": "R4", "area": 8, "date": "2026-12-08", "aud": ["Sposito", "Alan"]}, {"r": "R4", "area": 6, "date": "2026-12-09", "aud": ["Estefani", "Helen Ventura"]}, {"r": "R4", "area": 9, "date": "2026-12-10", "aud": ["Edison", "Maria Eduarda"]}, {"r": "R5", "area": 4, "date": "2026-12-14", "aud": ["Lidiane", "Gilberto"]}, {"r": "R5", "area": 2, "date": "2026-12-15", "aud": ["Alexandre", "Maria Eduarda"]}, {"r": "R5", "area": 7, "date": "2026-12-16", "aud": ["Helen Ventura", "Spina Neto"]}, {"r": "R5", "area": 5, "date": "2026-12-17", "aud": ["Alan", "Kelvin"]}, {"r": "R5", "area": 1, "date": "2026-12-18", "aud": ["Thais", "Andres"]}, {"r": "R5", "area": 3, "date": "2026-12-21", "aud": ["Estefani", "Sposito"]}, {"r": "R5", "area": 8, "date": "2026-12-22", "aud": ["Edison", "Lidiane"]}, {"r": "R5", "area": 6, "date": "2026-12-23", "aud": ["Andres", "Thais"]}, {"r": "R5", "area": 9, "date": "2026-12-28", "aud": ["Kelvin", "Sposito"]}, {"r": "R6", "area": 4, "date": "2026-12-30", "aud": ["Spina Neto", "Maria Eduarda"]}, {"r": "R6", "area": 2, "date": "2027-01-04", "aud": ["Alan", "Alexandre"]}, {"r": "R6", "area": 7, "date": "2027-01-05", "aud": ["Helen Ventura", "Kelvin"]}, {"r": "R6", "area": 5, "date": "2027-01-06", "aud": ["Lidiane", "Spina Neto"]}, {"r": "R6", "area": 1, "date": "2027-01-07", "aud": ["Sposito", "Helen Ventura"]}, {"r": "R6", "area": 3, "date": "2027-01-08", "aud": ["Alan", "Thais"]}, {"r": "R6", "area": 8, "date": "2026-12-30", "aud": ["Thais", "Gilberto"]}, {"r": "R6", "area": 6, "date": "2027-01-04", "aud": ["Estefani", "Lidiane"]}, {"r": "R6", "area": 9, "date": "2027-01-05", "aud": ["Andres", "Edison"]}, {"r": "R7", "area": 4, "date": "2027-01-11", "aud": ["Gilberto", "Alexandre"]}, {"r": "R7", "area": 2, "date": "2027-01-12", "aud": ["Maria Eduarda", "Lidiane"]}, {"r": "R7", "area": 7, "date": "2027-01-13", "aud": ["Alan", "Spina Neto"]}, {"r": "R7", "area": 5, "date": "2027-01-14", "aud": ["Helen Ventura", "Kelvin"]}, {"r": "R7", "area": 1, "date": "2027-01-15", "aud": ["Edison", "Gilberto"]}, {"r": "R7", "area": 3, "date": "2027-01-18", "aud": ["Andres", "Maria Eduarda"]}, {"r": "R7", "area": 8, "date": "2027-01-19", "aud": ["Estefani", "Kelvin"]}, {"r": "R7", "area": 6, "date": "2027-01-20", "aud": ["Sposito", "Alexandre"]}, {"r": "R7", "area": 9, "date": "2027-01-21", "aud": ["Thais", "Spina Neto"]}, {"r": "R8", "area": 4, "date": "2027-01-25", "aud": ["Helen Ventura", "Gilberto"]}, {"r": "R8", "area": 2, "date": "2027-01-26", "aud": ["Alan", "Lidiane"]}, {"r": "R8", "area": 7, "date": "2027-01-27", "aud": ["Alexandre", "Maria Eduarda"]}, {"r": "R8", "area": 5, "date": "2027-01-28", "aud": ["Spina Neto", "Kelvin"]}, {"r": "R8", "area": 1, "date": "2027-01-29", "aud": ["Estefani", "Maria Eduarda"]}, {"r": "R8", "area": 3, "date": "2027-02-01", "aud": ["Edison", "Helen Ventura"]}, {"r": "R8", "area": 8, "date": "2027-02-02", "aud": ["Andres", "Gilberto"]}, {"r": "R8", "area": 6, "date": "2027-02-03", "aud": ["Sposito", "Alexandre"]}, {"r": "R8", "area": 9, "date": "2027-02-04", "aud": ["Thais", "Alan"]}, {"r": "R9", "area": 4, "date": "2027-02-10", "aud": ["Lidiane", "Kelvin"]}, {"r": "R9", "area": 2, "date": "2027-02-11", "aud": ["Spina Neto", "Helen Ventura"]}, {"r": "R9", "area": 7, "date": "2027-02-12", "aud": ["Gilberto", "Maria Eduarda"]}, {"r": "R9", "area": 5, "date": "2027-02-15", "aud": ["Alan", "Alexandre"]}, {"r": "R9", "area": 1, "date": "2027-02-16", "aud": ["Andres", "Lidiane"]}, {"r": "R9", "area": 3, "date": "2027-02-17", "aud": ["Estefani", "Spina Neto"]}, {"r": "R9", "area": 8, "date": "2027-02-18", "aud": ["Edison", "Maria Eduarda"]}, {"r": "R9", "area": 6, "date": "2027-02-19", "aud": ["Thais", "Helen Ventura"]}, {"r": "R9", "area": 9, "date": "2027-02-19", "aud": ["Sposito", "Kelvin"]}, {"r": "R10", "area": 4, "date": "2027-02-22", "aud": ["Alexandre", "Alan"]}, {"r": "R10", "area": 2, "date": "2027-02-23", "aud": ["Gilberto", "Lidiane"]}, {"r": "R10", "area": 7, "date": "2027-02-24", "aud": ["Helen Ventura", "Maria Eduarda"]}, {"r": "R10", "area": 5, "date": "2027-02-25", "aud": ["Kelvin", "Spina Neto"]}, {"r": "R10", "area": 1, "date": "2027-02-26", "aud": ["Edison", "Alan"]}, {"r": "R10", "area": 3, "date": "2027-03-01", "aud": ["Estefani", "Lidiane"]}, {"r": "R10", "area": 8, "date": "2027-03-02", "aud": ["Andres", "Gilberto"]}, {"r": "R10", "area": 6, "date": "2027-03-03", "aud": ["Thais", "Alexandre"]}, {"r": "R10", "area": 9, "date": "2027-03-04", "aud": ["Sposito", "Spina Neto"]}, {"r": "R11", "area": 4, "date": "2027-03-08", "aud": ["Maria Eduarda", "Kelvin"]}, {"r": "R11", "area": 2, "date": "2027-03-09", "aud": ["Gilberto", "Helen Ventura"]}, {"r": "R11", "area": 7, "date": "2027-03-10", "aud": ["Alexandre", "Lidiane"]}, {"r": "R11", "area": 5, "date": "2027-03-11", "aud": ["Alan", "Spina Neto"]}, {"r": "R11", "area": 1, "date": "2027-03-12", "aud": ["Estefani", "Kelvin"]}, {"r": "R11", "area": 3, "date": "2027-03-15", "aud": ["Andres", "Helen Ventura"]}, {"r": "R11", "area": 8, "date": "2027-03-16", "aud": ["Edison", "Alan"]}, {"r": "R11", "area": 6, "date": "2027-03-17", "aud": ["Sposito", "Gilberto"]}, {"r": "R11", "area": 9, "date": "2027-03-18", "aud": ["Thais", "Alexandre"]}, {"r": "R12", "area": 4, "date": "2027-03-22", "aud": ["Lidiane", "Maria Eduarda"]}, {"r": "R12", "area": 2, "date": "2027-03-23", "aud": ["Kelvin", "Spina Neto"]}, {"r": "R12", "area": 7, "date": "2027-03-24", "aud": ["Gilberto", "Alan"]}, {"r": "R12", "area": 5, "date": "2027-03-25", "aud": ["Helen Ventura", "Alexandre"]}, {"r": "R12", "area": 1, "date": "2027-03-29", "aud": ["Andres", "Maria Eduarda"]}, {"r": "R12", "area": 3, "date": "2027-03-30", "aud": ["Edison", "Lidiane"]}, {"r": "R12", "area": 8, "date": "2027-03-31", "aud": ["Estefani", "Spina Neto"]}, {"r": "R12", "area": 6, "date": "2027-04-01", "aud": ["Sposito", "Kelvin"]}, {"r": "R12", "area": 9, "date": "2027-04-02", "aud": ["Thais", "Gilberto"]}, {"r": "R13", "area": 4, "date": "2027-04-05", "aud": ["Helen Ventura", "Alan"]}, {"r": "R13", "area": 2, "date": "2027-04-06", "aud": ["Alexandre", "Maria Eduarda"]}, {"r": "R13", "area": 7, "date": "2027-04-07", "aud": ["Lidiane", "Spina Neto"]}, {"r": "R13", "area": 5, "date": "2027-04-08", "aud": ["Gilberto", "Kelvin"]}, {"r": "R13", "area": 1, "date": "2027-04-09", "aud": ["Edison", "Helen Ventura"]}, {"r": "R13", "area": 3, "date": "2027-04-12", "aud": ["Andres", "Alan"]}, {"r": "R13", "area": 8, "date": "2027-04-13", "aud": ["Estefani", "Maria Eduarda"]}, {"r": "R13", "area": 6, "date": "2027-04-14", "aud": ["Thais", "Lidiane"]}, {"r": "R13", "area": 9, "date": "2027-04-15", "aud": ["Sposito", "Alexandre"]}, {"r": "R14", "area": 4, "date": "2027-04-19", "aud": ["Spina Neto", "Alexandre"]}, {"r": "R14", "area": 2, "date": "2027-04-20", "aud": ["Kelvin", "Alan"]}, {"r": "R14", "area": 7, "date": "2027-04-22", "aud": ["Gilberto", "Maria Eduarda"]}, {"r": "R14", "area": 5, "date": "2027-04-23", "aud": ["Lidiane", "Helen Ventura"]}, {"r": "R14", "area": 1, "date": "2027-04-26", "aud": ["Estefani", "Spina Neto"]}, {"r": "R14", "area": 3, "date": "2027-04-27", "aud": ["Edison", "Kelvin"]}, {"r": "R14", "area": 8, "date": "2027-04-28", "aud": ["Andres", "Helen Ventura"]}, {"r": "R14", "area": 6, "date": "2027-04-29", "aud": ["Sposito", "Gilberto"]}, {"r": "R14", "area": 9, "date": "2027-04-30", "aud": ["Thais", "Maria Eduarda"]}, {"r": "R15", "area": 4, "date": "2027-05-03", "aud": ["Alexandre", "Lidiane"]}, {"r": "R15", "area": 2, "date": "2027-05-04", "aud": ["Alan", "Kelvin"]}, {"r": "R15", "area": 7, "date": "2027-05-05", "aud": ["Gilberto", "Helen Ventura"]}, {"r": "R15", "area": 5, "date": "2027-05-06", "aud": ["Maria Eduarda", "Spina Neto"]}, {"r": "R15", "area": 1, "date": "2027-05-07", "aud": ["Estefani", "Alan"]}, {"r": "R15", "area": 3, "date": "2027-05-10", "aud": ["Andres", "Lidiane"]}, {"r": "R15", "area": 8, "date": "2027-05-11", "aud": ["Edison", "Kelvin"]}, {"r": "R15", "area": 6, "date": "2027-05-12", "aud": ["Thais", "Alexandre"]}, {"r": "R15", "area": 9, "date": "2027-05-13", "aud": ["Sposito", "Spina Neto"]}, {"r": "R16", "area": 4, "date": "2027-05-17", "aud": ["Gilberto", "Helen Ventura"]}, {"r": "R16", "area": 2, "date": "2027-05-18", "aud": ["Alexandre", "Lidiane"]}, {"r": "R16", "area": 7, "date": "2027-05-19", "aud": ["Alan", "Maria Eduarda"]}, {"r": "R16", "area": 5, "date": "2027-05-20", "aud": ["Kelvin", "Spina Neto"]}, {"r": "R16", "area": 1, "date": "2027-05-21", "aud": ["Andres", "Gilberto"]}, {"r": "R16", "area": 3, "date": "2027-05-24", "aud": ["Estefani", "Helen Ventura"]}, {"r": "R16", "area": 8, "date": "2027-05-25", "aud": ["Edison", "Lidiane"]}, {"r": "R16", "area": 6, "date": "2027-05-26", "aud": ["Sposito", "Alexandre"]}, {"r": "R16", "area": 9, "date": "2027-05-28", "aud": ["Thais", "Alan"]}, {"r": "R17", "area": 4, "date": "2027-05-31", "aud": ["Maria Eduarda", "Kelvin"]}, {"r": "R17", "area": 2, "date": "2027-06-01", "aud": ["Spina Neto", "Gilberto"]}, {"r": "R17", "area": 7, "date": "2027-06-02", "aud": ["Alexandre", "Lidiane"]}, {"r": "R17", "area": 5, "date": "2027-06-03", "aud": ["Helen Ventura", "Alan"]}, {"r": "R17", "area": 1, "date": "2027-06-04", "aud": ["Edison", "Maria Eduarda"]}, {"r": "R17", "area": 3, "date": "2027-06-07", "aud": ["Estefani", "Kelvin"]}, {"r": "R17", "area": 8, "date": "2027-06-08", "aud": ["Andres", "Spina Neto"]}, {"r": "R17", "area": 6, "date": "2027-06-09", "aud": ["Thais", "Helen Ventura"]}, {"r": "R17", "area": 9, "date": "2027-06-10", "aud": ["Sposito", "Gilberto"]}, {"r": "R18", "area": 4, "date": "2027-06-14", "aud": ["Alan", "Lidiane"]}, {"r": "R18", "area": 2, "date": "2027-06-15", "aud": ["Maria Eduarda", "Alexandre"]}, {"r": "R18", "area": 7, "date": "2027-06-16", "aud": ["Kelvin", "Spina Neto"]}, {"r": "R18", "area": 5, "date": "2027-06-17", "aud": ["Gilberto", "Helen Ventura"]}, {"r": "R18", "area": 1, "date": "2027-06-18", "aud": ["Edison", "Alan"]}, {"r": "R18", "area": 3, "date": "2027-06-21", "aud": ["Estefani", "Maria Eduarda"]}, {"r": "R18", "area": 8, "date": "2027-06-22", "aud": ["Andres", "Lidiane"]}, {"r": "R18", "area": 6, "date": "2027-06-23", "aud": ["Sposito", "Alexandre"]}, {"r": "R18", "area": 9, "date": "2027-06-24", "aud": ["Thais", "Kelvin"]}]};
 const MODE = "aemco";
 const CO = null;
 const MT = MODE === "aretia";
@@ -1119,12 +1122,44 @@ function scope(areaSel, si, round) {
   const vals = per.map((p) => p.pct).filter((x) => x != null);
   return { qs, pct: vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null, areas: per.length };
 }
+/* Rev. 28 · Avanço acumulativo: a área só valida o Senso N quando, na MESMA auditoria,
+   todos os Sensos de 1S até N ficam com 80% ou mais. Senso validado não regride. */
+function audSensoPct(list, si) {
+  let ok = 0, t = 0;
+  for (let k = 1; k <= 5; k++) list.forEach((a) => {
+    const v = a.answers && a.answers[si * 5 + k];
+    if (v) { t++; if (v === "ok") ok++; }
+  });
+  return t ? ok / t : null;
+}
+function areaStage(areaId, upto) {
+  const byDate = {};
+  AUDITS.forEach((a) => {
+    if (a.area !== areaId || upto && a.date > upto) return;
+    (byDate[a.date] || (byDate[a.date] = [])).push(a);
+  });
+  let st = 0;
+  Object.keys(byDate).sort().forEach((d) => {
+    if (st >= 5) return;
+    const list = byDate[d];
+    for (let si = 0; si <= st; si++) {
+      const p = audSensoPct(list, si);
+      if (p == null || p < 0.8) return;
+    }
+    st++;
+    while (st < 5) {
+      const p = audSensoPct(list, st);
+      if (p != null && p >= 0.8) st++;
+      else break;
+    }
+  });
+  return st;
+}
 function currentSenso(areaId) {
-  for (let si = 0; si < 5; si++) {
-    const r = areaSenso(areaId, si, "last");
-    if (!r || r.pct < 0.8) return si;
-  }
-  return 4;
+  return Math.min(4, areaStage(areaId));
+}
+function sensoRange(si) {
+  return si > 0 ? CFG.sensos[0].code + " a " + CFG.sensos[si].code : CFG.sensos[0].code;
 }
 function radarSVG(data, opts = {}) {
   const S = opts.size || 620, c = S / 2, R = S / 2 - (opts.mini ? 12 : 96), step = 2 * Math.PI / 5;
@@ -1209,8 +1244,7 @@ function renderDash() {
   $("k-pct-d").textContent = (focus === "all" ? "média dos Sensos auditados" : CFG.sensos[focus].code + " " + CFG.sensos[focus].pt) + " · " + (state.area === "all" ? "todas as áreas" : AREA[+state.area].name);
   const META = Math.min(4, Math.max(0, (_a2 = { "09": 0, "10": 0, "11": 1, "12": 2, "01": 3, "02": 4 }[TODAY.slice(5, 7)]) != null ? _a2 : 4));
   const areasOk = CFG.areas.filter((a) => {
-    const r = areaSenso(a.id, META, "last");
-    return r && r.pct >= 0.8;
+    return areaStage(a.id) > META;
   }).length;
   $("k-areas-l").textContent = "Áreas com ".concat(CFG.sensos[META].code, " validado (≥ 80%)");
   const areasAud = CFG.areas.filter((a) => AUDITS.some((x) => x.area === a.id)).length;
@@ -1267,7 +1301,12 @@ function renderDash() {
     return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
   });
   $("evo-sub").textContent = (siE == null ? "Média dos Sensos auditados" : CFG.sensos[siE].code + " " + CFG.sensos[siE].pt) + " · " + (state.area === "all" ? "todas as áreas" : AREA[+state.area].name);
-  $("evo").innerHTML = evoSVG(evo, siE);
+  let lastR = CFG.rounds.findIndex((r) => r.code === roundOf(TODAY));
+  evo.forEach((v, i) => { if (v != null && i > lastR) lastR = i; });
+  const endR = Math.max(7, lastR + 1), offR = Math.max(0, endR - 10);
+  const evoV = evo.slice(offR, endR);
+  evoV.off = offR;
+  $("evo").innerHTML = evoSVG(evoV, siE);
   const sis = focus === "all" ? [0, 1, 2, 3, 4] : [focus];
   $("qt-title").textContent = "Perguntas · " + (focus === "all" ? "todos os Sensos" : CFG.sensos[focus].code + " " + CFG.sensos[focus].jp);
   let q = "";
@@ -1304,7 +1343,7 @@ function evoSVG(vals, si) {
   g += '<line x1="'.concat(L, '" x2="').concat(W - 4, '" y1="').concat(y(0.8), '" y2="').concat(y(0.8), '" stroke="').concat(css("--ok"), '" stroke-dasharray="5 4" stroke-width="1.6"/>');
   vals.forEach((v, i) => {
     const x = L + i * bw + bw * 0.18, w = bw * 0.64;
-    const r = CFG.rounds[i];
+    const r = CFG.rounds[i + (vals.off || 0)];
     if (v != null) {
       g += '<rect x="'.concat(x, '" y="').concat(y(v), '" width="').concat(w, '" height="').concat(y(0) - y(v), '" rx="3" fill="').concat(colorFor(v).startsWith("var") ? css(colorFor(v).slice(4, -1)) : col, '"/><text x="').concat(x + w / 2, '" y="').concat(y(v) - 5, '" font-size="11" text-anchor="middle" fill="').concat(css("--ink"), '" font-weight="700" font-family="IBM Plex Mono,monospace">').concat(Math.round(v * 100), "%</text>");
     }
@@ -1312,7 +1351,12 @@ function evoSVG(vals, si) {
   });
   return g + "</svg>";
 }
-const A = { area: null, senso: 0, prev: false, answers: {}, obs: {} };
+const A = { area: null, senso: 0, prev: true, answers: {}, obs: {} };
+function sensoChips() {
+  $("a-senso").innerHTML = CFG.sensos.map((s, i) => '<button class="chip" data-s="'.concat(i, '" style="--c:var(').concat(SC[i], ')" aria-pressed="').concat(i <= A.senso, '">').concat(s.code, " ").concat(esc(s.pt), "</button>")).join("");
+  const el = $("a-senso-info");
+  if (el) el.innerHTML = A.area ? "<b>" + esc(AREA[A.area].name.split(" (")[0]) + "</b> está no <b>" + CFG.sensos[A.senso].code + "</b>: a auditoria traz as perguntas de <b>" + sensoRange(A.senso) + "</b> (" + (A.senso + 1) * 5 + " perguntas). Para avançar, todos os Sensos precisam de 80% ou mais." : "Escolha a área: o app marca sozinho os Sensos que ela deve auditar (acumulativo).";
+}
 function audOptions(sel) {
   return '<option value="">Selecionar…</option>' + CFG.auditores.map((n) => "<option ".concat(n === sel ? "selected" : "", ">").concat(esc(n), "</option>")).join("");
 }
@@ -1322,10 +1366,11 @@ function renderSetup(prefill) {
   $("a-date").value = (prefill == null ? void 0 : prefill.date) || TODAY;
   if (prefill) {
     A.area = prefill.area;
-    A.senso = (_a2 = prefill.senso) != null ? _a2 : A.senso;
+    A.senso = currentSenso(A.area);
   }
+  A.prev = true;
   $("a-areas").innerHTML = CFG.areas.map((a) => '<button class="areabtn" data-area="'.concat(a.id, '" style="--c:').concat(a.color, '" aria-pressed="').concat(A.area === a.id, '"><i></i><span>').concat(a.id, ". ").concat(esc(a.name.split(" (")[0]), '<br><span class="sub">').concat(esc(a.lider), " · ").concat(esc(a.colider), "</span></span></button>")).join("");
-  $("a-senso").innerHTML = CFG.sensos.map((s, i) => '<button class="chip" data-s="'.concat(i, '" style="--c:var(').concat(SC[i], ')" aria-pressed="').concat(A.senso === i, '">').concat(s.code, " ").concat(esc(s.pt), "</button>")).join("");
+  sensoChips();
   $("a-aud1").innerHTML = audOptions((_b2 = prefill == null ? void 0 : prefill.aud) == null ? void 0 : _b2[0]);
   $("a-aud2").innerHTML = audOptions((_c = prefill == null ? void 0 : prefill.aud) == null ? void 0 : _c[1]);
   const todays = CFG.sched.filter((s) => s.date === TODAY);
@@ -1334,7 +1379,7 @@ function renderSetup(prefill) {
     const b = e.target.closest("[data-sug]");
     if (!b) return;
     const s = todays.find((x) => x.area === +b.dataset.sug);
-    renderSetup({ area: s.area, date: s.date, aud: s.aud, senso: sensoOfRound(s.r) });
+    renderSetup({ area: s.area, date: s.date, aud: s.aud });
   };
   checkStart();
 }
@@ -1350,19 +1395,25 @@ $("a-areas").onclick = (e) => {
   if (!b) return;
   A.area = +b.dataset.area;
   [...$("a-areas").children].forEach((x) => x.setAttribute("aria-pressed", x === b));
+  A.senso = currentSenso(A.area);
+  sensoChips();
   checkStart();
 };
 $("a-senso").onclick = (e) => {
   const b = e.target.closest(".chip");
   if (!b) return;
+  if (SIMPLE && !(typeof isAdmin === "function" && isAdmin())) {
+    toast("O Senso é definido pelo avanço da área. Só a Coordenação 5S pode alterar.");
+    return;
+  }
   A.senso = +b.dataset.s;
-  [...$("a-senso").children].forEach((x) => x.setAttribute("aria-pressed", x === b));
+  sensoChips();
 };
 ["a-date", "a-aud1", "a-aud2"].forEach((id) => $(id).addEventListener("change", checkStart));
-$("a-prev").onchange = (e) => A.prev = e.target.checked;
+A.prev = true;
 function formQs() {
   const out = [];
-  const from = A.prev ? 0 : A.senso;
+  const from = 0;
   for (let si = from; si <= A.senso; si++) CFG.sensos[si].qs.forEach((t, qi) => out.push({ n: si * 5 + qi + 1, si, t }));
   return out;
 }
@@ -1373,7 +1424,7 @@ $("a-start").onclick = () => {
   $("f-note").value = "";
   const a = AREA[A.area];
   const s = CFG.sensos[A.senso];
-  $("f-head").innerHTML = '<span class="dot" style="background:'.concat(a.color, '"></span>').concat(esc(a.name.split(" (")[0]), ' · <span style="color:var(').concat(SC[A.senso], ')">').concat(s.code, " ").concat(esc(s.jp), "</span> · ").concat(fmtD($("a-date").value));
+  $("f-head").innerHTML = '<span class="dot" style="background:'.concat(a.color, '"></span>').concat(esc(a.name.split(" (")[0]), ' · <span style="color:var(').concat(SC[A.senso], ')">').concat(sensoRange(A.senso), "</span> · ").concat(fmtD($("a-date").value));
   $("f-qs").innerHTML = formQs().map((q) => '<div class="card q" style="--c:var('.concat(SC[q.si], ')" data-n="').concat(q.n, '">\n      <div class="label" style="color:var(').concat(SC[q.si], ')">').concat(CFG.sensos[q.si].code, " · Pergunta ").concat(q.n, '</div><div class="t">').concat(esc(q.t), '</div>\n      <div class="ans"><button data-v="ok" aria-pressed="false">Sim · OK</button><button data-v="nok" aria-pressed="false">Não · Não OK</button></div>\n      <input type="text" id="obs-').concat(q.n, '" placeholder="Observação (obrigatória se Não OK)" aria-label="Observação da pergunta ').concat(q.n, '">\n      <div class="phrow"><div class="ph" id="ph-').concat(q.n, '"></div><label class="phadd cam"><input type="file" accept="image/*" capture="environment" hidden data-q="').concat(q.n, '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg> Câmera</label><label class="phadd"><input type="file" accept="image/*,.heic,.heif" multiple hidden data-q="').concat(q.n, '"> 🖼️ Galeria</label></div>\n      <div class="pa" id="pa-').concat(q.n, '"></div></div>')).join("");
   phClear(A.id);
   A.id = newId($("a-date").value, A.area);
@@ -1551,7 +1602,28 @@ function showDone(doc) {
   const p = ok / own.length;
   $("d-pct").textContent = Math.round(p * 100) + "%";
   $("d-pct").style.color = colorFor(p);
-  $("d-verdict").textContent = p >= 0.8 ? "Atingiu a meta – pode avançar para o ".concat(CFG.sensos[Math.min(si + 1, 4)].code) : "Abaixo de 80% – manter ".concat(doc.senso, " e concluir as ações em 15 dias");
+  const parts = [];
+  for (let i = 0; i <= si; i++) {
+    const pi = audSensoPct([doc], i);
+    if (pi != null) parts.push({ i, p: pi });
+  }
+  const bad = parts.filter((x) => x.p < 0.8);
+  const full = parts.length === si + 1;
+  $("d-verdict").textContent = !bad.length && full ? si >= 4 ? "5S completo – todos os Sensos na meta. Manter a sustentação" : "Meta atingida em todos os Sensos – avança para o ".concat(CFG.sensos[si + 1].code) : bad.length ? "Não avança: ".concat(bad.map((x) => CFG.sensos[x.i].code + " com " + Math.round(x.p * 100) + "%").join(", "), " (meta 80%). Concluir as ações em 15 dias e repetir ").concat(sensoRange(si)) : "Auditoria parcial – para avançar, audite ".concat(sensoRange(si), " na mesma auditoria");
+  let brk = $("d-break");
+  if (!brk) {
+    brk = document.createElement("div");
+    brk.id = "d-break";
+    brk.style.cssText = "display:flex;gap:6px;flex-wrap:wrap;margin-top:6px";
+    $("d-verdict").after(brk);
+  }
+  brk.innerHTML = parts.map((x) => '<span class="pill" style="--c:'.concat(colorFor(x.p), '">').concat(CFG.sensos[x.i].code, " · ").concat(Math.round(x.p * 100), "%</span>")).join("");
+  if (parts.length > 1) {
+    const mn = Math.min(...parts.map((x) => x.p));
+    $("d-pct").textContent = Math.round(mn * 100) + "%";
+    $("d-pct").style.color = colorFor(mn);
+    brk.insertAdjacentHTML("beforeend", '<span class="sub" style="width:100%">A nota em destaque é a do Senso mais baixo: é ele que decide o avanço.</span>');
+  }
   $("d-info").textContent = "".concat(AREA[doc.area].name, " · ").concat(fmtD(doc.date), " · ").concat(doc.auditors.join(" e "));
   const nok = Object.entries(doc.answers).filter(([, v]) => v === "nok");
   $("d-nok").innerHTML = nok.length ? '<div class="label" style="margin-bottom:6px">Levar para o Plano de Ação ('.concat(nok.length, ")</div>") + nok.map(([n]) => '<div class="row"><span><b class="num">P'.concat(n, "</b> ").concat(esc(QN[n - 1].text)).concat(doc.obs[n] ? " — <i>".concat(esc(doc.obs[n]), "</i>") : "", "</span></div>")).join("") : "";
@@ -1593,7 +1665,7 @@ function renderCal() {
       const a = AREA[s.area];
       const done = AUDITS.some((x) => x.area === s.area && x.round === s.r);
       const r = CFG.rounds.find((x) => x.code === s.r);
-      return '<div class="calitem"><span><span class="dot" style="background:'.concat(a.color, '"></span><b>').concat(esc(a.name.split(" (")[0]), '</b> <span class="sub">· ').concat(esc(r.obj), '</span><br><span class="sub">').concat(esc(s.aud.join(" / ") || "realizada no Kickoff"), "</span></span>").concat(done ? '<span class="pill" style="--c:var(--ok)">Realizada</span>' : '<button class="btn alt sm" data-go=\''.concat(JSON.stringify({ area: s.area, date: s.date, aud: s.aud, senso: sensoOfRound(s.r) }), "'>Auditar</button>"), "</div>");
+      return '<div class="calitem"><span><span class="dot" style="background:'.concat(a.color, '"></span><b>').concat(esc(a.name.split(" (")[0]), '</b> <span class="sub">· plano: ').concat(esc(r.obj), '</span><br><span class="sub">').concat(esc(s.aud.join(" / ") || "realizada no Kickoff"), "</span></span>").concat(done ? '<span class="pill" style="--c:var(--ok)">Realizada</span>' : '<button class="btn alt sm" data-go=\''.concat(JSON.stringify({ area: s.area, date: s.date, aud: s.aud }), "'>Auditar · ").concat(sensoRange(currentSenso(s.area)), "</button>"), "</div>");
     }).join("") + "</div></div>";
   }).join("") : '<p class="sub">Nenhuma auditoria para este filtro.</p>';
 }
@@ -4309,13 +4381,7 @@ function userAreaId() {
 }
 function areaPhase(id) {
   if (!id || !AREA[id]) return null;
-  let p = 0;
-  for (let si = 0; si < 5; si++) {
-    const r = areaSenso(id, si, "last");
-    if (r && r.pct >= 0.8) p = si + 1;
-    else break;
-  }
-  return p;
+  return areaStage(id);
 }
 function teamPhase() {
   const ps = CFG.areas.map((a) => areaPhase(a.id)).filter((x) => x != null);
@@ -4928,7 +4994,7 @@ function renderDocs() {
   var key = CO ? CO.key.toUpperCase() : "AEMCO";
   var docs = [
     { t: "Kickoff do Programa 5S", d: "Apresentação do lançamento do programa: fundamentos, método 5S, ciclo quinzenal, checklist e gestão.", f: "Kickoff_5S_" + key + ".pdf", ic: "📽️" },
-    { t: "Manual do Programa 5S", d: "Documento controlado: objetivo, responsabilidades, critérios de auditoria, plano de ação e indicadores.", f: "Manual_5S_" + key + ".pdf", ic: "📘" }
+    { t: "Manual do Programa 5S", d: CO ? "Documento controlado: objetivo, responsabilidades, critérios de auditoria, plano de ação e indicadores." : "Manual visual do programa e do app: passo a passo com as telas, regras de avanço e exemplos.", f: "Manual_5S_" + key + ".pdf", ic: "📘" }
   ];
   v.innerHTML = '<div class="card pad"><h2>Documentos do Programa 5S · ' + esc(nm) + '</h2><div class="sub">Toque para abrir ou baixar em PDF. Os arquivos ficam disponíveis também sem internet depois do primeiro acesso.</div></div>' +
     docs.map(function (d) {
